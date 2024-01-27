@@ -11,21 +11,21 @@ redirect_from:
 
 Education
 ======
-* B.S. in GitHub, GitHub University, 2012
-* M.S. in Jekyll, GitHub University, 2014
-* Ph.D in Version Control Theory, GitHub University, 2018 (expected)
+* B.Sc. in Biotechnology, Marwari College, Bhagalpur, Tilka Manjhi Bhagalpur University, 2013
+* M.Sc. in Bioinformatics, Central University of South Bihar, 2016
+* Ph.D in Bioinformatics, International Institute of Information Technology (IIIT) - Hyderabad, 2023
 
 Work experience
 ======
-* Summer 2015: Research Assistant
-  * Github University
+* Sept 2023‑ March 2024: Post‑doctoral Fellow
+  *  IIT Delhi & IHub‑Data IIIT Hyderabad
   * Duties included: Tagging issues
-  * Supervisor: Professor Git
 
-* Fall 2015: Research Assistant
-  * Github University
-  * Duties included: Merging pull requests
-  * Supervisor: Professor Hub
+
+* Oct 2016‑ June 2017: Project Assistant
+  * CSIR‑IGIB, New Delhi,
+  * Membrane binding and targeting of peripheral proteins: Finding molecular address using in silico studies
+
   
 Skills
 ======
