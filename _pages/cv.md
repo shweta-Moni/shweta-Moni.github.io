@@ -19,12 +19,12 @@ Work experience
 ======
 * Sept 2023‑ March 2024: Post‑doctoral Fellow
   *  IIT Delhi & IHub‑Data IIIT Hyderabad
-  * Duties included: Tagging issues
+  * Soft matter simulation. Aggregation of pseudoisocyanine chloride (PIC) in the presence of crowder at multiple temperatures.
 
 
 * Oct 2016‑ June 2017: Project Assistant
   * CSIR‑IGIB, New Delhi,
-  * Membrane binding and targeting of peripheral proteins: Finding molecular address using in silico studies
+  * Membrane binding and targeting of peripheral proteins: Finding molecular address using in silico studies.
 
   
 Skills
