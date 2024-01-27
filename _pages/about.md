@@ -6,7 +6,8 @@ redirect_from:
   - /about/
   - /about.html
 ---
-
+About me
+======
 I am a computational biologist working on biomolecules and soft matter. Currently, I am a postdoctoral fellow
 at IIT Delhi, working on dye molecule aggregation using molecular dynamics simulations. I did my Ph.D. at IIIT
 Hyderabad with Prof. Abhijit Mitra and Prof. Gopalakrishnan Bulusu. I worked on the structure and dynamics of
