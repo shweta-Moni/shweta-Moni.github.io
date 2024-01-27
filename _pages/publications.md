@@ -5,12 +5,6 @@ permalink: /publications/
 author_profile: true
 ---
 
----
-layout: archive
-title: ""
-permalink: /publications/
-author_profile: true
----
 
 You can also find my articles on [Google Scholar](https://scholar.google.com/citations?hl=en&user=fqnBaU8AAAAJ){:target="_blank"}
 
