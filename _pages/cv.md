@@ -21,7 +21,6 @@ Work experience
   *  IIT Delhi & IHub‑Data IIIT Hyderabad
   * Soft matter simulation. Aggregation of pseudoisocyanine chloride (PIC) in the presence of crowder at multiple temperatures.
 
-
 * Oct 2016‑ June 2017: Project Assistant
   * CSIR‑IGIB, New Delhi,
   * Membrane binding and targeting of peripheral proteins: Finding molecular address using in silico studies.
@@ -44,20 +43,19 @@ Skills
 
 Publications
 ======
-  <ul>{% for post in site.publications %}
-    {% include archive-single-cv.html %}
-  {% endfor %}</ul>
+* **S. Kumari**, A. Mitra, and G. Bulusu, “Putative Role of cholesterol in shaping the structural and functional dynamics of Smoothened (SMO)”, The Journal of Physical Chemistry B, 127(44), 9476-9495.
+* **S. Kumari**, A. Mitra, and G. Bulusu, “Structural dynamics of Smoothened (SMO) in the ciliary membrane and its interaction with membrane lipids.”, Biochimica et Biophysica Acta (BBA)-Biomembranes, 1864(8), 183946.
   
 Conferences and Workshops Attended
 ======
 * Poster presentation in conference
-  * **Shweta Kumari**, Abhijit Mitra, and Gopalakrishnan Bulusu. “Investigating cholesterol binding to cholesterol‐binding motifs of SMO‐TMD”. 44th Indian Biophysical Society Meeting (IBS 2022) 2022, organized by National Centre for Biological Sciences (NCBS), Bangalore, India. (March 27‐29, 2023).
-  * **Shweta Kumari**, Abhijit Mitra, and Gopalakrishnan Bulusu. “Structural variations of different cholesterol‐bound states of Smoothened (SMO)”. MBU50 Symposium 2022, organized by Indian Institute of Science (IISc), Bangalore, India. (January 23‐25, 2023).
-  * **Shweta Kumari**, Abhijit Mitra, and Gopalakrishnan Bulusu. “Investigating cholesterol binding to cholesterol‐binding motifs of SMO‐TMD”. 44th Indian Biophysical Society Meeting (IBS 2022) 2022, organized by ACTREC, Tata Memorial Centre, Navi Mumbai, India. (March 30‐31 and April 1, 2022).
-  * **Shweta Kumari**, Abhijit Mitra, and Gopalakrishnan Bulusu. “Structural modulation in Smoothened (SMO) in ciliary membrane and its interaction with membrane lipids”. Molecular Modeling (MM) 2021. Organized by Association of Molecular Modelers of Australasia (December 6‐8, 2021) (Virtual).
-  * **Shweta Kumari**, Abhijit Mitra, and Gopalakrishnan Bulusu. “Structural modulation in Smoothened (SMO) in ciliary membrane and its interaction with membrane lipids”. EMBO Workshop, Advances and Challenges in Biomolecular Simulations 2021. Organized by Alexandre Bonvin, Utrecht University, NL. (October 18–21, 2021) (Virtual).
-  * **Shweta Kumari**, Abhijit Mitra, and Gopalakrishnan Bulusu. “Structural modulation in Smoothened (SMO) in ciliary membrane and its interaction with membrane lipids”. HySci 2020. Organized by CCMB Hyderabad, India. December 17‐18 (Virtual).
-  * **Shweta Kumari**, Feroz Khan. ”Clustering method development for screening of Sesquiterpenoids as Anti‐cancer Natural Lead against Human DNA Topoisomerase II alpha”. 1st International conference on human implication of biotechnology (ICHIB), Organized by Central University of South Bihar, Patna, India (February 12‐14, 2016).
+  * **S. Kumari**, A. Mitra, and G. Bulusu. “Investigating cholesterol binding to cholesterol‐binding motifs of SMO‐TMD”. 44th Indian Biophysical Society Meeting (IBS 2022) 2022, organized by National Centre for Biological Sciences (NCBS), Bangalore, India. (March 27‐29, 2023).
+  * **S. Kumari**, A. Mitra, and G. Bulusu. “Structural variations of different cholesterol‐bound states of Smoothened (SMO)”. MBU50 Symposium 2022, organized by Indian Institute of Science (IISc), Bangalore, India. (January 23‐25, 2023).
+  * **S. Kumari**, A. Mitra, and G. Bulusu. “Investigating cholesterol binding to cholesterol‐binding motifs of SMO‐TMD”. 44th Indian Biophysical Society Meeting (IBS 2022) 2022, organized by ACTREC, Tata Memorial Centre, Navi Mumbai, India. (March 30‐31 and April 1, 2022).
+  * **S. Kumari**, A. Mitra, and G. Bulusu. “Structural modulation in Smoothened (SMO) in ciliary membrane and its interaction with membrane lipids”. Molecular Modeling (MM) 2021. Organized by Association of Molecular Modelers of Australasia (December 6‐8, 2021) (Virtual).
+  * **S. Kumari**, A. Mitra, and G. Bulusu. “Structural modulation in Smoothened (SMO) in ciliary membrane and its interaction with membrane lipids”. EMBO Workshop, Advances and Challenges in Biomolecular Simulations 2021. Organized by Alexandre Bonvin, Utrecht University, NL. (October 18–21, 2021) (Virtual).
+  * **S. Kumari**, A. Mitra, and G. Bulusu. “Structural modulation in Smoothened (SMO) in ciliary membrane and its interaction with membrane lipids”. HySci 2020. Organized by CCMB Hyderabad, India. December 17‐18 (Virtual).
+  * **S. Kumari**, F. Khan. ”Clustering method development for screening of Sesquiterpenoids as Anti‐cancer Natural Lead against Human DNA Topoisomerase II alpha”. 1st International conference on human implication of biotechnology (ICHIB), Organized by Central University of South Bihar, Patna, India (February 12‐14, 2016).
     
 * Workshop and symposium attended 
   * Participated in National Supercomputing Mission (NSM) on Multiscale Modelling using exascale computing: Membrane Protein Interactions organized by Indian Institute of Science (IISc), Bengaluru, India. (July 6‐15, 2023).
@@ -65,7 +63,6 @@ Conferences and Workshops Attended
   * Machine Learning for Science (ML4Science). International Institute of Information Technology (IIIT), Hyderabad, India. (November 29‐30, 2019).
   * Indo‐German workshop on Computing in Chemistry, Biology and Medicine. International Institute of Information Technology (IIIT), Hyderabad, India. (November 29‐30, 2017).
 
-  
 Teaching
 ======
 
