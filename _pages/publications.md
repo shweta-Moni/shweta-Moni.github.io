@@ -12,8 +12,8 @@ Published
 ========
 
 2. **S. Kumari**, A. Mitra, and G. Bulusu, “Putative Role of cholesterol in shaping the structural and functional dynamics
-of Smoothened (SMO)”, The Journal of Physical Chemistry B, 127(44), 9476-9495.
-1. **S. Kumari**, A. Mitra, and G. Bulusu, “Structural dynamics of Smoothened (SMO) in the ciliary membrane and its interaction with membrane lipids.”, Biochimica et Biophysica Acta (BBA)-Biomembranes, 1864(8), 183946.
+of Smoothened (SMO)”, [The Journal of Physical Chemistry B](https://doi.org/10.1021/acs.jpcb.3c02255){:target="_blank"}, 127(44), 9476-9495.
+1. **S. Kumari**, A. Mitra, and G. Bulusu, “Structural dynamics of Smoothened (SMO) in the ciliary membrane and its interaction with membrane lipids.”, [Biochimica et Biophysica Acta (BBA)-Biomembranes](https://doi.org/10.1016/j.bbamem.2022.183946){:target="_blank"}, 1864(8), 183946.
 {: reversed="reversed"}
 
 
