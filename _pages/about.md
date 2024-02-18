@@ -22,6 +22,6 @@ Research Interest
 ======
 1. Molecular Dynamics simulation (atomistic and coarse-grained)
 1. G-protein coupled receptors (GPCRs): structure and dynamics
-1. Membrane-lipid/small molecule interaction
+1. Protein-membrane lipid/small molecule interaction
 1. Material science
 
