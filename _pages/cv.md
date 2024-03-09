@@ -77,9 +77,9 @@ Teaching
 * Computing Tools.
   * The responsibilities were to conduct weekly tutorial/lab sessions, evaluations of assignments and final projects, and invigilation of exams.
 * Selected topics in Instrumental Analysis.
-  * The responsibilities include evaluations of assignments, examination answer scripts.
+  * The responsibilities include evaluations of assignments and examination answer scripts.
 * Topics in Nanosciences.
-  * The responsibilities included the evaluations of assignments, examination answer scripts and final project. 
+  * The responsibilities included the evaluations of assignments, examination answer scripts, and the final project. 
   
 Awards & Fellowships
 ======
@@ -90,7 +90,7 @@ Awards & Fellowships
 Biology (CCMB) (2020).
 * Fee waiver, virtual EMBO Workshop‐Advances and Challenges in Biomolecular Simulation (2021)
 * Best poster award, JNCASR‑CECAM Conference MD@60 organized by organized by
-Jawaharlal Nehru Centre for Advanced Scientific Research (JNCASR), Bangalore, India
+Jawaharlal Nehru Centre for Advanced Scientific Research (JNCASR), Bangalore, India. (2024)
 
 Scientific Meetings Organised
 ======
