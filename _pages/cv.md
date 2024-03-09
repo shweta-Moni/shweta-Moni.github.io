@@ -20,6 +20,7 @@ Work experience
 * Sept 2023‑ March 2024: Post‑doctoral Fellow
   *  IIT Delhi & IHub‑Data IIIT Hyderabad
   * Soft matter simulation. Aggregation of pseudoisocyanine chloride (PIC) in the presence of crowder at multiple temperatures.
+  * Interaction of model mini peptide with eukaryotic model membrane.
 
 * Oct 2016‑ June 2017: Project Assistant
   * CSIR‑IGIB, New Delhi,
@@ -49,6 +50,9 @@ Publications
 Conferences and Workshops Attended
 ======
 * Poster presentation at the conference
+  * **S. Kumari**, A. Mitra, and G. Bulusu. “A Journey into the Structure and Dynamics of Smoothened
+(SMO) in Hedgehog (HH) Signaling Pathway”. JNCASR‑CECAM Conference MD@60, organized by Jawaharlal Nehru
+Centre for Advanced Scientific Research (JNCASR), Bangalore, India. (February 26‑29, 2024).
   * **S. Kumari**, A. Mitra, and G. Bulusu. “Investigating cholesterol binding to cholesterol‐binding motifs of SMO‐TMD”. 44th Indian Biophysical Society Meeting (IBS 2022) 2022, organized by the National Centre for Biological Sciences (NCBS), Bangalore, India. (March 27‐29, 2023).
   * **S. Kumari**, A. Mitra, and G. Bulusu. “Structural variations of different cholesterol‐bound states of Smoothened (SMO)”. MBU50 Symposium 2022, organized by the Indian Institute of Science (IISc), Bangalore, India. (January 23‐25, 2023).
   * **S. Kumari**, A. Mitra, and G. Bulusu. “Investigating cholesterol binding to cholesterol‐binding motifs of SMO‐TMD”. 44th Indian Biophysical Society Meeting (IBS 2022) 2022, organized by ACTREC, Tata Memorial Centre, Navi Mumbai, India. (March 30‐31 and April 1, 2022).
@@ -79,11 +83,14 @@ Teaching
   
 Awards & Fellowships
 ======
-* DST INSPIRE Fellowship, Govt. of India (2017‐2022, Five years fellowship for pursuing Ph.D.)
-* Best poster award, HySci 2020 organized by CSIR‐CCMB (2020)
-* Selected conference travel grant, IBS (2020)
-* Fee waiver, virtual EMBO Workshop‐Advances and Challenges in Biomolecular Simulation (2021)
 * 1st rank, M.Sc. Bioinformatics in Central University of South Bihar (2014‐2016)
+* DST INSPIRE Fellowship, Govt. of India (2017‐2022, Five years fellowship for pursuing Ph.D.)
+* Selected conference travel grant, IBS (2020).
+* Best poster award, HySci 2020, organized by CSIR–Centre For Cellular And Molecular
+Biology (CCMB) (2020).
+* Fee waiver, virtual EMBO Workshop‐Advances and Challenges in Biomolecular Simulation (2021)
+* Best poster award, JNCASR‑CECAM Conference MD@60 organized by organized by
+Jawaharlal Nehru Centre for Advanced Scientific Research (JNCASR), Bangalore, India
 
 Scientific Meetings Organised
 ======
@@ -93,8 +100,8 @@ Scientific Meetings Organised
 
 Other Position(s)/ Responsibility
 ======
- * Core volunteer, Campus wide COVID‐19 screening on IIIT, Hyderabad campus (2021).
- * Core volunteer, Social servise‐ community kitchen on IIIT, Hyderabad campus during 1st wave of COVID‐19 (2020).
+ * Core volunteer, Campus-wide COVID‐19 screening on IIIT, Hyderabad campus (2021).
+ * Core volunteer, Social service‐ community kitchen on IIIT, Hyderabad campus during 1st wave of COVID‐19 (2020).
  * Mess Representative, Worked in a team of 3 members (Mess committee) to run the IIIT, Hyderabad mess during 1st wave of COVID‐19 (2020).
  * Mess Representative, Central University of South Bihar, Gaya (2015‐2016)
 
