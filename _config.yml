@@ -6,7 +6,7 @@
 # `jekyll serve`. If you change this file, please restart the server process.
 
 # Site Settings
-locale                   : "en-US"
+locale                   : "Bethlehem, PA, United States"
 title                    : "Shweta Kumari"
 title_separator          : "-"
 name                     : &name "Shweta Kumari"
@@ -83,7 +83,7 @@ author:
   name             : "Shweta Kumari"
   avatar           : "pic.png"
   bio              : "Computational Biologist"
-  location         : "Delhi, India"
+  location         : "Bethlehem, PA, United States"
   employer         :
   pubmed           : #https://www.ncbi.nlm.nih.gov/pubmed/?term=john+snow"
   googlescholar    : "https://scholar.google.com/citations?user=fqnBaU8AAAAJ&hl=en"
