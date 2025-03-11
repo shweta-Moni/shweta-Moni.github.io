@@ -17,6 +17,13 @@ Education
 
 Work experience
 ======
+
+* July 2024- June 2025: Post‑doctoral Fellow
+ * Lehigh University,Bethlehem, Pennsylvania, United States
+ * Biomolecule simulation. Ligand interaction and stability with URAT1 using atomistic molecular dynamics simulation.
+ * Studying the state transition of the Organic Cation Receptor1 (OCT1) using the enhanced sampling method.
+ * Integrated MDAnalysis-based analysis modules (RMSF, radius of gyration, position vs time, and helix analysis) into \href{https://github.com/nk53/stanalyzer}{stanalyzer}
+
 * Sept 2023‑ March 2024: Post‑doctoral Fellow
   *  IIT Delhi & IHub‑Data IIIT Hyderabad
   * Soft matter simulation. Aggregation of pseudoisocyanine chloride (PIC) in the presence of crowder at multiple temperatures.
@@ -35,15 +42,16 @@ Skills
     * Qualified Linux test conducted by IIT Bombay, funded by MHRD, Gov. of India.
 * Bioinformatics Skills
   * Visualization tools: Chimera, VMD, Pymol, Discovery Studio, Desmond, Paraview.
-  * Molecular Dynamics tool (Atomistic and Coarse Grained Simulation): Gromacs, Desmond (Schrödinger).
+  * Molecular Dynamics tool (Atomistic and Coarse Grained Simulation): Gromacs, Desmond (Schrödinger), AMBER (basic).
   * Protein structure prediction: Homology moldeling (Modeller, SWISS MODEL), Fold recognition (I‐TASSER, MUSTER, Phyre and Phyre2), Ab‐initio (ROBETTA).
   * Chemical Structure Drawing tools: ChemDraw, Chem Ultra, MarvinSketch.
-  * Other tools and servers: Inkscape, Xmgrace, CHARMM‐GUI Input Generator, MDAnalysis, MDTraj, FATSLiM, LAMMPS (basic).
+  * Other tools and servers: Inkscape, Xmgrace, CHARMM‐GUI Input Generator, MDAnalysis, MDTraj, FATSLiM, stanalyzer, LAMMPS (basic).
 * Languages
   * English and Hindi (can read, write and speak)
 
 Publications
 ======
+* Y Suo†, J G. Fedor†, H Zhang, K Tsolova, X Shi, K Sharma, S Kumari, M Borgnia, P Zhan, W Im, S Lee* Molecular basis of the urate transporter URAT1 inhibition by gout drugs. bioRxiv.
 * **S. Kumari**, A. Mitra, and G. Bulusu, “Putative Role of cholesterol in shaping the structural and functional dynamics of Smoothened (SMO)”, The Journal of Physical Chemistry B, 127(44), 9476-9495.
 * **S. Kumari**, A. Mitra, and G. Bulusu, “Structural dynamics of Smoothened (SMO) in the ciliary membrane and its interaction with membrane lipids.”, Biochimica et Biophysica Acta (BBA)-Biomembranes, 1864(8), 183946.
   
@@ -100,6 +108,7 @@ Scientific Meetings Organised
 
 Other Position(s)/ Responsibility
 ======
+ * Director of Communication and Events, Lehigh Postdoctoral Association, Lehigh University (August 2024- January 2025)
  * Core volunteer, Campus-wide COVID‐19 screening on IIIT, Hyderabad campus (2021).
  * Core volunteer, Social service‐ community kitchen on IIIT, Hyderabad campus during 1st wave of COVID‐19 (2020).
  * Mess Representative, Worked in a team of 3 members (Mess committee) to run the IIIT, Hyderabad mess during 1st wave of COVID‐19 (2020).
