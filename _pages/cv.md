@@ -19,10 +19,10 @@ Work experience
 ======
 
 * July 2024- June 2025: Post‑doctoral Fellow
- * Lehigh University,Bethlehem, Pennsylvania, United States
- * Biomolecule simulation. Ligand interaction and stability with URAT1 using atomistic molecular dynamics simulation.
- * Studying the state transition of the Organic Cation Receptor1 (OCT1) using the enhanced sampling method.
- * Integrated MDAnalysis-based analysis modules (RMSF, radius of gyration, position vs time, and helix analysis) into \href{https://github.com/nk53/stanalyzer}{stanalyzer}
+   * Lehigh University,Bethlehem, Pennsylvania, United States
+   * Biomolecule simulation. Ligand interaction and stability with URAT1 using atomistic molecular dynamics simulation.
+   * Studying the state transition of the Organic Cation Receptor1 (OCT1) using the enhanced sampling method.
+   * Integrated MDAnalysis-based analysis modules (RMSF, radius of gyration, position vs time, and helix analysis) into \href{https://github.com/nk53/stanalyzer}{stanalyzer}
 
 * Sept 2023‑ March 2024: Post‑doctoral Fellow
   *  IIT Delhi & IHub‑Data IIIT Hyderabad
