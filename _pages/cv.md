@@ -91,14 +91,13 @@ Teaching
   
 Awards & Fellowships
 ======
-* 1st rank, M.Sc. Bioinformatics in Central University of South Bihar (2014‐2016)
-* DST INSPIRE Fellowship, Govt. of India (2017‐2022, Five years fellowship for pursuing Ph.D.)
+* Best poster award, JNCASR‑CECAM Conference MD@60 organized by organized by Jawaharlal Nehru Centre for Advanced Scientific Research (JNCASR), Bangalore, India (2024).
+* Fee waiver, virtual EMBO Workshop‐Advances and Challenges in Biomolecular Simulation (2021).
+* Best poster award, HySci 2020, organized by CSIR–Centre For Cellular And Molecular Biology (CCMB) (2020).
 * Selected conference travel grant, IBS (2020).
-* Best poster award, HySci 2020, organized by CSIR–Centre For Cellular And Molecular
-Biology (CCMB) (2020).
-* Fee waiver, virtual EMBO Workshop‐Advances and Challenges in Biomolecular Simulation (2021)
-* Best poster award, JNCASR‑CECAM Conference MD@60 organized by organized by
-Jawaharlal Nehru Centre for Advanced Scientific Research (JNCASR), Bangalore, India. (2024)
+* DST INSPIRE Fellowship, Govt. of India (2017‐2022, Five years fellowship for pursuing Ph.D.).
+* 1st rank, M.Sc. Bioinformatics in Central University of South Bihar (2014‐2016).
+
 
 Scientific Meetings Organised
 ======
