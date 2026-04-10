@@ -18,6 +18,10 @@ Education
 Work experience
 ======
 
+* April 2026- Present: Post‑doctoral Fellow
+   * Laboratory for Computational Molecular Design, RIKEN, Kobe
+   * Biomolecule simulation. Effect of cancer related mutation in EGFR using MD simulation and modeling.
+   
 * July 2024- June 2025: Post‑doctoral Fellow
    * Lehigh University,Bethlehem, Pennsylvania, United States
    * Biomolecule simulation. Ligand interaction and stability with URAT1 using atomistic molecular dynamics simulation.
@@ -51,7 +55,7 @@ Skills
 
 Publications
 ======
-* Y Suo†, J G. Fedor†, H Zhang, K Tsolova, X Shi, K Sharma, S Kumari, M Borgnia, P Zhan, W Im, S Lee* Molecular basis of the urate transporter URAT1 inhibition by gout drugs. bioRxiv.
+* Y Suo†, J G. Fedor†, H Zhang, K Tsolova, X Shi, K Sharma, S Kumari, M Borgnia, P Zhan, W Im, S Lee* Molecular basis of the urate transporter URAT1 inhibition by gout drugs. Nat Commun 16, 5178 (2025).
 * **S. Kumari**, A. Mitra, and G. Bulusu, “Putative Role of cholesterol in shaping the structural and functional dynamics of Smoothened (SMO)”, The Journal of Physical Chemistry B, 127(44), 9476-9495.
 * **S. Kumari**, A. Mitra, and G. Bulusu, “Structural dynamics of Smoothened (SMO) in the ciliary membrane and its interaction with membrane lipids.”, Biochimica et Biophysica Acta (BBA)-Biomembranes, 1864(8), 183946.
   
