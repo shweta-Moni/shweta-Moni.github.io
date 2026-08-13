@@ -28,7 +28,7 @@ Work experience
    * Studying the state transition of the Organic Cation Receptor1 (OCT1) using the enhanced sampling method.
    * Integrated MDAnalysis-based analysis modules (RMSF, radius of gyration, position vs time, and helix analysis) into [stanalyzer](https://github.com/nk53/stanalyzer){:target="_blank"}
 
-* Sept 2023‑ March 2024: Post‑doctoral Fellow
+* Sept 2023‑ May 2024: Post‑doctoral Fellow
   *  IIT Delhi & IHub‑Data IIIT Hyderabad
   * Soft matter simulation. Aggregation of pseudoisocyanine chloride (PIC) in the presence of crowder at multiple temperatures.
   * Interaction of model mini peptide with eukaryotic model membrane.
