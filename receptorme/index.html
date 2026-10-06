@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ReceptorMe: Get coupled. Spell your name in GPCRs.</title>
+<meta name="description" content="ReceptorMe: Get coupled. Spell your name in GPCRs. Every letter binds a real G protein-coupled receptor.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧬</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F6F9FB; --paper:#FFFFFF; --ink:#1D1B3F; --ink-2:#55537A; --ink-3:#8A88A8;
+  --line:#DCE3EA; --ext:#DDF1F6; --int:#EEE8FA; --head:#F0B44C; --tail:#E6C88C;
+  --lig-fill:#FFFFFF; --bg-g:#B7B2D9; --focus:#3B82F6;
+  --display:'Fredoka',ui-rounded,'Trebuchet MS',sans-serif;
+  --body:'Atkinson Hyperlegible',system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#10141B; --paper:#171C25; --ink:#ECEAF8; --ink-2:#B4B2CF; --ink-3:#7E7C9C;
+    --line:#2A3140; --ext:#122A33; --int:#211A36; --head:#C98F2E; --tail:#6F5A33;
+    --lig-fill:#1D2230; --bg-g:#6A6590; --focus:#7AA7FF;
+  }
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6;
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px;border-radius:6px}
+button{font-family:inherit}
+
+/* Hero */
+.hero{display:grid;grid-template-columns:1fr;gap:28px;align-items:center;padding:44px 0 36px}
+@media (min-width:860px){.hero{grid-template-columns:1.05fr 1fr;gap:40px;padding:64px 0 48px}}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(38px,6.4vw,66px);line-height:1;letter-spacing:-.015em;margin:0 0 18px;max-width:12ch}
+.brand{font:600 22px var(--display);margin:0 0 10px;color:var(--ink-2);display:inline-block;padding:4px 14px;border:2px solid var(--line);border-radius:999px;background:var(--paper)}
+.lede{color:var(--ink-2);font-size:18px;max-width:44ch;margin:0 0 26px}
+.form{display:flex;gap:10px;flex-wrap:wrap;max-width:480px}
+.form label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.form input{flex:1 1 220px;min-width:0;font:600 20px var(--display);color:var(--ink);background:var(--paper);
+  border:2px solid var(--line);border-radius:14px;padding:12px 16px;outline:none}
+.form input:focus{border-color:var(--focus)}
+.btn{font:600 17px var(--display);padding:12px 22px;border-radius:14px;border:2px solid var(--ink);
+  background:var(--ink);color:var(--bg);cursor:pointer;transition:transform .12s}
+.btn:hover{transform:translateY(-1px)}
+.btn:active{transform:translateY(1px)}
+.btn.soft{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn.soft:hover{border-color:var(--ink-3)}
+.err{color:#D93A3F;font-size:14px;min-height:22px;margin-top:6px}
+.tries{font-size:14px;color:var(--ink-3);margin-top:4px}
+.tries button{font:inherit;color:var(--ink-2);background:none;border:0;padding:0 2px;text-decoration:underline;
+  text-underline-offset:3px;cursor:pointer}
+.heroart{border-radius:28px;overflow:hidden;border:2px solid var(--line);background:var(--ext)}
+.heroart svg{display:block;width:100%;height:auto}
+
+/* Results */
+.res{display:none;padding-bottom:20px}
+.res.show{display:block}
+.reshead{display:flex;flex-wrap:wrap;gap:12px;align-items:end;justify-content:space-between;margin:12px 0 18px}
+h2{font-family:var(--display);font-weight:600;font-size:clamp(26px,4vw,36px);line-height:1.1;margin:0}
+h3{font-family:var(--display);font-weight:600;font-size:22px;margin:0 0 10px}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.actions .btn{font-size:15px;padding:9px 16px;border-radius:12px}
+.toast{font-size:14px;color:var(--ink-2);min-height:20px;margin-top:4px}
+
+.strip{border:2px solid var(--line);border-radius:24px;overflow-x:auto;overflow-y:hidden;background:var(--paper);
+  scrollbar-width:thin}
+.row{display:flex;justify-content:center;min-width:100%;width:max-content;padding:0 24px;
+  background:
+    radial-gradient(circle,var(--head) 4.6px,transparent 5.2px) 0 110px/12px 12px repeat-x,
+    radial-gradient(circle,var(--head) 4.6px,transparent 5.2px) 0 178px/12px 12px repeat-x,
+    repeating-linear-gradient(90deg,var(--tail) 0 1.6px,transparent 1.6px 6px) 0 122px/12px 56px repeat-x,
+    linear-gradient(var(--ext),var(--ext)) 0 0/100% 116px no-repeat,
+    linear-gradient(var(--int),var(--int)) 0 184px/100% 96px no-repeat;
+}
+.rc{flex:0 0 auto;width:120px;padding:0;border:0;background:none;cursor:pointer;color:var(--ink);text-align:center}
+.rc svg{display:block;width:120px;height:280px}
+.rc .lab{font-size:13px;line-height:1.25;padding:10px 6px 14px;color:var(--ink-2);min-height:58px}
+.rc[aria-pressed="true"] .lab{color:var(--ink);font-weight:700}
+.rc .binds{display:block;font-size:11.5px;font-weight:400;color:var(--ink-3);margin-top:3px}
+.rc .lt{display:block;font:700 22px/1 var(--display);color:var(--ink);margin-bottom:4px}
+.rc[aria-pressed="true"] .ligc{stroke-width:3.2}
+.zone{fill:var(--ink-3);font:600 11px var(--body)}
+
+/* receptor parts */
+.ext{fill:var(--ext)} .int{fill:var(--int)} .lhead{fill:var(--head)} .ltail{stroke:var(--tail)}
+.ligc{fill:#FFC94D;stroke:#9A6A08;stroke-width:2}
+.ligt{fill:var(--ink);font:700 17px var(--display)}
+.bgc{fill:var(--bg-g)}
+.gtxt{fill:#fff;font:700 9px var(--body);letter-spacing:.02em}
+.eye{fill:#fff;stroke:var(--ink);stroke-width:1.2}
+.pupil,.smile{transition:transform .5s}
+.pupil{fill:var(--ink)} .smile{stroke:var(--ink);fill:none;stroke-width:2.2;stroke-linecap:round}
+.lig,.tm6,.ga,.bgr,.gdp,.gtp,.vl,.vr{transition:transform .55s cubic-bezier(.3,.7,.3,1.2),opacity .3s}
+.tm6{transform-box:fill-box;transform-origin:50% 0}
+.gtp{opacity:0}
+.on .lig{transform:translateY(40px)}
+.on .cc .lig{transform:none}
+.on .vl{transform:translateX(5px)} .on .vr{transform:translateX(-5px)}
+.on .tm6{transform:rotate(-13deg);transition-delay:.35s}
+.on .ga{transform:translateY(-13px);transition-delay:.6s}
+.on .bgr{transform:translate(14px,11px);transition-delay:1s}
+.on .gdp{opacity:0;transition-delay:.85s} .on .gtp{opacity:1;transition-delay:.85s}
+.on .pupil{transform:translateY(-2px)}
+
+/* Panels below strip */
+.grid2{display:grid;grid-template-columns:1fr;gap:18px;margin-top:22px}
+@media (min-width:860px){.grid2{grid-template-columns:1.3fr 1fr}}
+.card{background:var(--paper);border:2px solid var(--line);border-radius:20px;padding:22px}
+.det .big{font:700 52px/1 var(--display);float:left;margin:2px 16px 4px 0;width:62px;height:62px;border-radius:50%;
+  border:2.5px solid var(--ink);display:flex;align-items:center;justify-content:center;font-size:32px}
+.det .nm{font:600 24px/1.15 var(--display);margin:4px 0 2px}
+.det .gene{color:var(--ink-3);font-size:14px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;clear:both;padding-top:14px}
+.chip{font-size:13px;font-weight:700;padding:4px 11px;border-radius:999px;color:#fff}
+.det p{margin:12px 0 0;color:var(--ink-2);max-width:60ch}
+.bar{display:flex;height:22px;border-radius:999px;overflow:hidden;margin:6px 0 14px;gap:2px}
+.bar span{display:block;height:100%}
+.legend{list-style:none;padding:0;margin:0;display:grid;gap:6px;font-size:15px}
+.legend li{display:flex;gap:10px;align-items:center}
+.sw{width:14px;height:14px;border-radius:4px;flex:0 0 auto}
+.legend .ct{margin-left:auto;font-weight:700}
+.legend .dsc{color:var(--ink-3);font-size:13px}
+
+/* Quiz */
+.quiz{margin-top:18px}
+.qhead{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:baseline}
+.score{font:600 18px var(--display);color:var(--ink-2)}
+.qbody{display:grid;grid-template-columns:1fr;gap:18px;align-items:center;margin-top:8px}
+@media (min-width:700px){.qbody{grid-template-columns:140px 1fr}}
+.qart svg{display:block;width:120px;height:280px;margin:0 auto;border-radius:16px;overflow:hidden}
+.qq{font:600 20px/1.3 var(--display);margin:0 0 14px}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opt{font:600 15px var(--display);padding:9px 14px;border-radius:12px;border:2px solid var(--line);background:var(--paper);
+  color:var(--ink);cursor:pointer;display:flex;gap:8px;align-items:center}
+.opt:hover:not(:disabled){border-color:var(--ink-3)}
+.opt .sw{width:12px;height:12px}
+.opt.right{border-color:#2E9E5B;background:rgba(46,158,91,.12)}
+.opt.wrong{border-color:#D93A3F;background:rgba(217,58,63,.1)}
+.opt:disabled{cursor:default}
+.fb{margin:14px 0 0;min-height:26px;color:var(--ink-2)}
+.fb b{color:var(--ink)}
+.qnext{margin-top:12px}
+
+/* Stepper styles */
+.how{margin-top:22px}
+.howgrid{display:grid;grid-template-columns:1fr;gap:22px;align-items:center}
+@media (min-width:860px){.howgrid{grid-template-columns:1fr 1fr}}
+.howart{border-radius:20px;overflow:hidden;border:2px solid var(--line)}
+.howart svg{display:block;width:100%;height:auto}
+.steps{display:flex;gap:8px;margin:0 0 14px;padding:0;list-style:none}
+.steps button{width:34px;height:34px;border-radius:50%;border:2px solid var(--line);background:var(--paper);
+  color:var(--ink-2);font:600 15px var(--display);cursor:pointer}
+.steps button[aria-current="step"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.sttl{font:600 24px/1.2 var(--display);margin:0 0 8px}
+.stxt{color:var(--ink-2);margin:0 0 6px;max-width:52ch}
+.sana{color:var(--ink);margin:10px 0 16px;padding-left:12px;border-left:4px solid var(--head);max-width:52ch}
+.stnav{display:flex;gap:8px}
+.stnav .btn{font-size:15px;padding:9px 18px;border-radius:12px}
+.msg{opacity:0;transition:opacity .5s}
+.on .msg{opacity:1;transition-delay:1.3s}
+.p-bind .lig{transform:translateY(40px)}
+.p-bind .tm6{transform:rotate(-13deg)}
+.p-swap .ga{transform:translateY(-13px)}
+.p-swap .gdp{opacity:0} .p-swap .gtp{opacity:1}
+.p-split .bgr{transform:translate(14px,11px)}
+.p-split .msg{opacity:1}
+.p-bind .pupil{transform:translateY(-2px)}
+/* Detail card additions */
+.det .does{font:600 21px/1.3 var(--display);color:var(--ink);margin:16px 0 4px;clear:both}
+.det .where{color:var(--ink-2);font-size:15px;margin:0}
+.det .where b,.det .dyk b{color:var(--ink)}
+.det .dyk{margin-top:14px;padding-top:12px;border-top:2px dashed var(--line);color:var(--ink-2)}
+/* Quiz modes */
+.modes{display:inline-flex;border:2px solid var(--line);border-radius:12px;overflow:hidden}
+.modes button{font:600 14px var(--display);padding:7px 12px;border:0;background:var(--paper);color:var(--ink-2);cursor:pointer}
+.modes button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.opts.col{flex-direction:column;align-items:stretch}
+.opts.col .opt{text-align:left;font-family:var(--body);font-weight:700}
+/* Glossary */
+.words{margin-top:18px}
+.words dl{display:grid;grid-template-columns:1fr;gap:14px 28px;margin:0}
+@media (min-width:700px){.words dl{grid-template-columns:1fr 1fr}}
+.words dt{font:600 18px var(--display)}
+.words dd{margin:2px 0 0;color:var(--ink-2)}
+/* Mascot moods */
+.eyes{transform-box:fill-box;transform-origin:center;animation:blink 5.5s infinite}
+@keyframes blink{0%,93%,100%{transform:scaleY(1)}96%{transform:scaleY(.12)}}
+.grin,.frown,.flat{opacity:0;transition:opacity .3s}
+.smile{transition:opacity .3s}
+.m-happy .smile,.m-sad .smile,.m-meh .smile,.m-dizzy .smile{opacity:0}
+.m-happy .grin{opacity:1} .m-sad .frown{opacity:1} .m-meh .flat,.m-dizzy .flat{opacity:1}
+.m-dizzy .pl{transform:translate(2.4px,1px)} .m-dizzy .pr{transform:translate(-2.4px,1px)}
+.m-sad .pupil{transform:translateY(2px)}
+.tails1{animation:wig 3.2s ease-in-out infinite}
+.tails2{animation:wig 3.2s ease-in-out infinite reverse}
+@keyframes wig{0%,100%{transform:translateX(0)}50%{transform:translateX(1.2px)}}
+
+/* Amplification burst */
+.burst{opacity:0;transform:scale(.2);transform-box:fill-box;transform-origin:center;
+  transition:opacity .3s,transform .45s cubic-bezier(.3,1.7,.5,1)}
+.on .burst{opacity:.9;transform:scale(1)}
+.ladder{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:14px 0 4px}
+.ladder div{background:var(--bg);border:2px solid var(--line);border-radius:12px;padding:6px 12px;text-align:center;min-width:86px}
+.ladder b{display:block;font:600 22px/1.1 var(--display);color:var(--ink)}
+.ladder span{font-size:12px;color:var(--ink-3)}
+.ladder i{font-style:normal;color:var(--ink-3);font-size:18px}
+.lnote{font-size:12px;color:var(--ink-3);margin:2px 0 0}
+.total{margin:14px 0 0;color:var(--ink-2);font-size:15px}
+.total b{font:600 24px var(--display);color:var(--ink)}
+.colstack{display:grid;gap:18px;align-content:start}
+
+/* Body map */
+:root{--sil:#E7EDF3;--sil-s:#C6D0DB;--org-off:rgba(29,27,63,.09);--lit:#FF9A73;--lit-sel:#E5484D}
+@media (prefers-color-scheme: dark){:root{--sil:#212938;--sil-s:#394456;--org-off:rgba(236,234,248,.09);--lit:#D97650;--lit-sel:#FF6B6B}}
+.bodysvg svg{display:block;width:100%;max-width:230px;height:auto;margin:6px auto 0}
+.sil{fill:var(--sil);stroke:var(--sil-s);stroke-width:1.5;transition:stroke .4s}
+.sil.lit{stroke:var(--lit);stroke-width:3}
+.org{fill:var(--org-off);transition:fill .4s;transform-box:fill-box;transform-origin:center}
+.org.lit{fill:var(--lit)}
+.org.sel{fill:var(--lit-sel);animation:pulse 1.3s ease-in-out infinite}
+.orgl{fill:none;stroke:var(--org-off);stroke-width:4;stroke-linecap:round;transition:stroke .4s}
+.orgl.lit{stroke:var(--lit)} .orgl.sel{stroke:var(--lit-sel)}
+.org.hi,.orgl.hi{stroke:var(--ink);stroke-width:2}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.14)}}
+.bsub{color:var(--ink-2);margin:0;font-size:15px}
+.olist{list-style:none;padding:0;margin:14px 0 0;display:flex;flex-wrap:wrap;gap:6px}
+.olist li{font-size:13px;border:2px solid var(--line);border-radius:999px;padding:3px 10px;cursor:default;background:var(--paper)}
+.olist li b{font-family:var(--display);margin-left:4px;color:var(--lit-sel)}
+
+/* Drug lab */
+.lab{margin-top:18px}
+.labintro{color:var(--ink-2);margin:6px 0 14px;max-width:62ch}
+.labgrid{display:grid;grid-template-columns:1fr;gap:20px;align-items:start}
+@media (min-width:760px){.labgrid{grid-template-columns:300px 1fr}}
+.labstage{border:2px solid var(--line);border-radius:20px;overflow:hidden;transition:outline-color .2s;outline:3px dashed transparent;outline-offset:3px}
+.labstage.hover{outline-color:var(--focus)}
+.labstage svg{display:block;width:100%;height:auto}
+.labstage .ligt{font-size:13px}
+.shake{animation:shake .45s}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(7px)}60%{transform:translateX(-5px)}80%{transform:translateX(3px)}}
+.t-ago .ligc{fill:#DDF5E6;stroke:#2E9E5B} .t-ant .ligc{fill:#FCE4E4;stroke:#D93A3F} .t-par .ligc{fill:#FFF0D4;stroke:#E89A2C}
+.t-ago .ligt,.t-ant .ligt,.t-par .ligt{fill:#1D1B3F}
+.nolig .lig{opacity:0}
+.p-tm .tm6{transform:rotate(-13deg)}
+.p-bind .cc .lig,.p-block .cc .lig{transform:none}
+.p-bind .vl,.p-block .vl{transform:translateX(5px)} .p-bind .vr,.p-block .vr{transform:translateX(-5px)}
+.modb{opacity:0;transform:translate(10px,-60px);transition:opacity .4s,transform .6s cubic-bezier(.3,.7,.3,1.2)}
+.has-mod .modb{opacity:1;transform:none}
+.t-inv .ligc{fill:#EDE3FB;stroke:#8E4EC6} .t-pam .ligc{fill:#D9F2F2;stroke:#0E9E9E} .t-nam .ligc{fill:#F5E1EA;stroke:#A33A67}
+.t-inv .ligt,.t-pam .ligt,.t-nam .ligt{fill:#1D1B3F}
+.tag.inv{background:#8E4EC6} .tag.pam{background:#0E9E9E} .tag.nam{background:#A33A67}
+.gauge{transition:stroke-dashoffset .9s cubic-bezier(.3,.8,.3,1)}
+#scn{flex-wrap:wrap}
+#scn button{min-width:36px}
+.p-block .lig{transform:translateY(40px)}
+.p-part .tm6{transform:rotate(-6deg)}
+.readout{display:flex;gap:18px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
+.ricon{width:84px;height:84px;flex:0 0 auto}
+.ricon svg{width:100%;height:100%;display:block}
+.beat{transform-box:fill-box;transform-origin:center;animation:beat var(--dur,.83s) ease-in-out infinite}
+@keyframes beat{0%,100%{transform:scale(1)}15%{transform:scale(1.16)}30%{transform:scale(.97)}45%{transform:scale(1.08)}}
+.lumen{transform-box:fill-box;transform-origin:center;transition:transform .9s cubic-bezier(.3,.8,.3,1)}
+.meters{flex:1 1 220px;display:grid;gap:12px}
+.meter .top{display:flex;justify-content:space-between;gap:10px;font-size:15px}
+.meter .top b{font:600 22px var(--display)}
+.meter .track{height:12px;border-radius:999px;background:var(--bg);border:2px solid var(--line);overflow:hidden;margin-top:4px}
+.meter .fill{height:100%;border-radius:999px;transition:width .9s cubic-bezier(.3,.8,.3,1)}
+.tray{display:flex;flex-wrap:wrap;gap:10px;margin:4px 0 14px}
+.pill{touch-action:none;user-select:none;-webkit-user-select:none;font:600 16px var(--display);padding:10px 16px;border-radius:999px;
+  border:2px solid var(--ink);background:var(--paper);color:var(--ink);cursor:grab;display:flex;gap:8px;align-items:center}
+.pill:active{cursor:grabbing}
+.pill .tag{font:700 11px var(--body);padding:2px 8px;border-radius:999px;color:#fff}
+.tag.ago{background:#2E9E5B} .tag.ant{background:#D93A3F} .tag.par{background:#E89A2C}
+.ghost{position:fixed;z-index:50;pointer-events:none;font:600 16px var(--display);padding:10px 16px;border-radius:999px;
+  background:var(--ink);color:var(--bg);transform:translate(-50%,-60%) rotate(-4deg)}
+.labmsg{min-height:52px;color:var(--ink-2);margin:0 0 12px;max-width:62ch}
+.labmsg b{color:var(--ink)}
+.quiz{position:relative;overflow:hidden}
+.cf{position:absolute;top:30%;left:50%;pointer-events:none}
+.stnow{font-size:14px;color:var(--ink-2);background:var(--bg);border:2px solid var(--line);border-radius:12px;padding:8px 12px;margin:0 0 14px}
+.stnow b{color:var(--ink)}
+/* Explore further */
+.links{margin-top:18px}
+.lgrp{font:600 16px var(--display);color:var(--ink-2);margin:18px 0 8px}
+.lgrid{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:1fr;gap:10px}
+@media (min-width:640px){.lgrid{grid-template-columns:1fr 1fr}}
+@media (min-width:960px){.lgrid{grid-template-columns:1fr 1fr 1fr}}
+.lgrid a{display:block;height:100%;text-decoration:none;color:var(--ink);background:var(--bg);border:2px solid var(--line);
+  border-radius:14px;padding:12px 14px;transition:border-color .2s,transform .2s}
+.lgrid a:hover{border-color:var(--ink-3);transform:translateY(-2px)}
+.lname{display:block;font:600 16px/1.25 var(--display)}
+.ldom{display:block;font-size:12px;color:var(--ink-3);margin:2px 0 6px}
+.ldesc{display:block;font-size:14px;color:var(--ink-2);line-height:1.45}
+footer{color:var(--ink-3);font-size:14px;padding:36px 0 48px;border-top:2px solid var(--line);margin-top:40px}
+footer p{margin:0 0 6px;max-width:70ch}
+@media (prefers-reduced-motion: reduce){
+  *{transition:none!important;animation:none!important;scroll-behavior:auto!important}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <section class="hero">
+    <div>
+      <p class="brand">ReceptorMe</p>
+      <h1>Get coupled. Spell your name in GPCRs.</h1>
+      <p class="lede">Every letter of your name becomes a real G protein-coupled receptor. Type a name, watch each receptor catch its natural messenger, and find out what it does in your body.</p>
+      <form class="form" id="form" autocomplete="off">
+        <label for="nm">Your name</label>
+        <input id="nm" type="text" maxlength="18" placeholder="Your name" spellcheck="false">
+        <button class="btn" type="submit">Bind my name</button>
+      </form>
+      <div class="err" id="err" role="alert"></div>
+      <div class="tries">Try <button data-try="Kobilka">Kobilka</button>, <button data-try="Rhodopsin">Rhodopsin</button> or <button data-try="Lefkowitz">Lefkowitz</button></div>
+    </div>
+    <div class="heroart" id="heroart" aria-hidden="true"></div>
+  </section>
+
+  <section class="res" id="res" aria-live="polite">
+    <div class="reshead">
+      <h2 id="title"></h2>
+      <div>
+        <div class="actions">
+          <button class="btn soft" id="swap" type="button">Swap receptors</button>
+          <button class="btn soft" id="share" type="button">Copy share link</button>
+        </div>
+        <div class="toast" id="toast"></div>
+      </div>
+    </div>
+
+    <div class="strip"><div class="row" id="row"></div></div>
+
+    <div class="grid2">
+      <div class="colstack">
+        <div class="card det" id="det"></div>
+        <div class="card">
+          <h3>Signaling profile</h3>
+          <div class="bar" id="bar"></div>
+          <ul class="legend" id="legend"></ul>
+          <p class="total" id="total"></p>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Where your name works</h3>
+        <p class="bsub" id="bsub"></p>
+        <div class="bodysvg" id="bodysvg"></div>
+        <ul class="olist" id="olist"></ul>
+      </div>
+    </div>
+
+    <div class="card lab" id="lab">
+      <div class="qhead"><h3>Drug lab</h3><div class="modes" id="scn" role="group" aria-label="Choose a letter from your name"></div></div>
+      <p class="labintro">Pick a letter, then drag a drug or natural ligand onto its receptor, or tap it. Predict first: will it switch the receptor on, block it, or do something stranger?</p>
+      <div class="labgrid">
+        <div class="labstage" id="labstage"></div>
+        <div>
+          <div class="readout" id="readout"></div>
+          <div class="tray" id="tray"></div>
+          <p class="labmsg" id="labmsg" aria-live="polite"></p>
+          <button class="btn soft" id="wash" type="button">Wash out the receptor</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card how" id="how">
+      <h3>How a GPCR passes on a message</h3>
+      <div class="howgrid">
+        <div class="howart" id="howart" aria-hidden="true"></div>
+        <div>
+          <p class="stnow" id="stnow"></p>
+          <ol class="steps" id="steps"></ol>
+          <p class="sttl" id="sttl"></p>
+          <p class="stxt" id="stxt"></p>
+          <p class="sana" id="sana"></p>
+          <div class="stnav">
+            <button class="btn soft" id="stback" type="button">Back</button>
+            <button class="btn" id="stnext" type="button">Next step</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card quiz" id="quiz"></div>
+
+    <div class="card words">
+      <h3>Words to know</h3>
+      <dl>
+        <div><dt>Ligand</dt><dd>The molecule that binds a receptor, like a key fitting a lock. In this game, the bubble that drops into each receptor is its natural ligand, and your letter tells you which receptor you are looking at.</dd></div>
+        <div><dt>GPCR</dt><dd>G protein-coupled receptor. A protein that crosses the cell membrane seven times and carries signals from outside the cell to inside.</dd></div>
+        <div><dt>G protein</dt><dd>The relay inside the cell. It is off when holding GDP and on when holding GTP. Its Gα part decides which message is sent.</dd></div>
+        <div><dt>Second messenger</dt><dd>Small molecules such as cAMP and Ca²⁺ that spread the signal through the cell, like a rumour passing through a crowd.</dd></div>
+        <div><dt>Agonist and antagonist</dt><dd>An agonist switches a receptor on. An antagonist sits in the receptor and blocks it. Salbutamol is an agonist; propranolol is an antagonist.</dd></div>
+        <div><dt>Arrestin</dt><dd>The off switch. After a receptor is tagged with phosphates, arrestin binds and stops it calling more G proteins.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+    <section class="card links" aria-labelledby="linksh">
+      <h3 id="linksh">Explore further</h3>
+      <p class="bsub">Curious for more? These free resources go deeper, from friendly introductions to the databases scientists use every day.</p>
+      <h4 class="lgrp">Start here</h4>
+      <ul class="lgrid">
+        <li><a href="https://pdb101.rcsb.org/motm/100" target="_blank" rel="noopener noreferrer"><span class="lname">PDB-101: Adrenergic receptors</span><span class="ldom">pdb101.rcsb.org</span><span class="ldesc">A friendly illustrated story of the β-adrenergic receptors, from the Molecule of the Month series.</span></a></li>
+        <li><a href="https://pdb101.rcsb.org/motm/58" target="_blank" rel="noopener noreferrer"><span class="lname">PDB-101: G proteins</span><span class="ldom">pdb101.rcsb.org</span><span class="ldesc">How the α, β and γ subunits switch on and off, with pictures.</span></a></li>
+        <li><a href="https://www.nobelprize.org/prizes/chemistry/2012/summary/" target="_blank" rel="noopener noreferrer"><span class="lname">Nobel Prize in Chemistry 2012</span><span class="ldom">nobelprize.org</span><span class="ldesc">Lefkowitz and Kobilka's prize for studies of GPCRs, with popular-science explanations.</span></a></li>
+      </ul>
+      <h4 class="lgrp">Databases researchers use</h4>
+      <ul class="lgrid">
+        <li><a href="https://gpcrdb.org" target="_blank" rel="noopener noreferrer"><span class="lname">GPCRdb</span><span class="ldom">gpcrdb.org</span><span class="ldesc">Reference data for every human GPCR: sequences, structures, ligands, drugs and mutations.</span></a></li>
+        <li><a href="https://gproteindb.org" target="_blank" rel="noopener noreferrer"><span class="lname">GproteinDb</span><span class="ldom">gproteindb.org</span><span class="ldesc">G protein couplings, complex structures and interface data. The source checked for this game.</span></a></li>
+        <li><a href="https://www.guidetopharmacology.org/GRAC/ReceptorFamiliesForward?type=GPCR" target="_blank" rel="noopener noreferrer"><span class="lname">Guide to Pharmacology: GPCRs</span><span class="ldom">guidetopharmacology.org</span><span class="ldesc">The official IUPHAR receptor names, with ligands and drugs for each family.</span></a></li>
+        <li><a href="https://biasedsignalingatlas.org" target="_blank" rel="noopener noreferrer"><span class="lname">Biased Signaling Atlas</span><span class="ldom">biasedsignalingatlas.org</span><span class="ldesc">Data on ligands that favour G proteins or arrestins.</span></a></li>
+      </ul>
+      <h4 class="lgrp">See them in 3D</h4>
+      <ul class="lgrid">
+        <li><a href="https://www.rcsb.org/structure/3SN6" target="_blank" rel="noopener noreferrer"><span class="lname">β2-adrenergic receptor with Gs (3SN6)</span><span class="ldom">rcsb.org</span><span class="ldesc">The landmark 2011 structure of a GPCR caught in the act of switching on its G protein.</span></a></li>
+        <li><a href="https://gpcrmd.org" target="_blank" rel="noopener noreferrer"><span class="lname">GPCRmd</span><span class="ldom">gpcrmd.org</span><span class="ldesc">Watch molecular dynamics simulations of GPCRs moving, right in the browser.</span></a></li>
+      </ul>
+    </section>
+
+  <footer>
+    <p>Receptor names follow IUPHAR nomenclature. G protein couplings checked against GproteinDb (GPCRdb, September 2026 release) where data were available. Couplings show the main pathway; most GPCRs also recruit β-arrestin and many couple to more than one G protein. J uses a box jellyfish opsin, since no human GPCR family starts with J.</p>
+    <p>Built by <a href="https://shweta-moni.github.io/" style="color:inherit">Shweta Kumari</a>, computational biologist. <a href="https://shweta-moni.github.io/science-and-society/" style="color:inherit">&larr; back to the site</a></p>
+  </footer>
+</div>
+
+<script>
+var CL={
+  A:{n:"Class A (rhodopsin-like)",c:"#6C5CE7"},
+  B1:{n:"Class B1 (secretin)",c:"#0E9E9E"},
+  B2:{n:"Class B2 (adhesion)",c:"#0B7A75"},
+  C:{n:"Class C (glutamate)",c:"#D94C92"},
+  F:{n:"Class F (frizzled)",c:"#C08000"},
+  T:{n:"Class T (taste 2)",c:"#8C6A4F"}
+};
+var GK={
+  s:{n:"Gs",nick:"the accelerator",c:"#E5484D",d:"raises cAMP"},
+  i:{n:"Gi/o",nick:"the brake",c:"#3B82F6",d:"lowers cAMP and calms cells"},
+  q:{n:"Gq/11",nick:"the calcium squeeze",c:"#2E9E5B",d:"releases Ca²⁺ so cells contract or secrete"},
+  "12":{n:"G12/13",nick:"the shape-shifter",c:"#8E4EC6",d:"remodels the cell skeleton"},
+  t:{n:"Sensory G protein",nick:"the sense switch",c:"#E89A2C",d:"transducin, Golf or gustducin"},
+  o:{n:"Non-canonical",nick:"the Wnt route",c:"#7C8197",d:"signals mainly via Dishevelled"}
+};
+var GORDER=["s","i","q","12","t","o"];
+
+function R(n,g,c,k,gt,w,b,f){return {n:n,g:g,c:c,k:k,gt:gt,w:w,b:b,f:f}}
+var DB={
+A:[R("β2-adrenergic receptor","ADRB2","A","s","Gs (also Gi)","Lungs, blood vessels, liver","Opens the airways and frees up glucose for energy","The asthma inhaler receptor. Its 2011 structure bound to Gs earned Brian Kobilka a share of the 2012 Nobel Prize."),
+   R("Adenosine A2A receptor","ADORA2A","A","s","Gs","Brain, blood vessels","Builds up sleepiness and widens blood vessels","Caffeine keeps you awake by blocking this receptor and its cousin A1."),
+   R("Angiotensin AT1 receptor","AGTR1","A","q","Gq","Blood vessels, adrenal gland","Squeezes blood vessels and raises blood pressure","Losartan and the other sartans lower blood pressure by blocking it."),
+   R("Adhesion receptor GPR56","ADGRG1","B2","12","G12/13","Developing brain, muscle","Guides how the brain folds as it grows","Carries its own agonist: a hidden peptide is unmasked when its GAIN domain is cleaved.")],
+B:[R("Bradykinin B2 receptor","BDKRB2","A","q","Gq","Blood vessels, pain nerves","Causes swelling, redness and pain","Icatibant blocks it to stop hereditary angioedema attacks."),
+   R("Bombesin BB2 receptor","GRPR","A","q","Gq","Spinal cord, gut","Carries itch signals up the spinal cord","Overexpressed in prostate cancer, so it is used as a target for tumour imaging.")],
+C:[R("Cannabinoid CB1 receptor","CNR1","A","i","Gi/o","Brain","Quietens nerve signalling and boosts appetite","The most abundant GPCR in the brain. Its own ligand, anandamide, is named after the Sanskrit word for bliss."),
+   R("Calcium-sensing receptor","CASR","C","q","Gq (also Gi)","Parathyroid gland, kidney","Measures blood calcium and lowers PTH when it is high","Cinacalcet turns up its sensitivity in overactive parathyroid disease."),
+   R("Chemokine receptor CXCR4","CXCR4","A","i","Gi","Immune and stem cells","Steers cells towards where they are needed","Plerixafor blocks it to release stem cells into blood for transplant. HIV also uses it to enter cells."),
+   R("CGRP receptor","CALCRL + RAMP1","B1","s","Gs","Blood vessels around the brain","Widens vessels and drives migraine pain","Needs a partner protein, RAMP1, to work. Antibodies against it prevent migraine.")],
+D:[R("Dopamine D2 receptor","DRD2","A","i","Gi/o","Brain, pituitary","Controls movement and switches off prolactin","Every approved antipsychotic blocks this receptor to some degree."),
+   R("Dopamine D1 receptor","DRD1","A","s","Gs","Brain, kidney vessels","Drives reward, motivation and movement","The main dopamine receptor of the striatum.")],
+E:[R("Endothelin ETA receptor","EDNRA","A","q","Gq (also Gi/o, G12/13)","Blood vessels","Clamps blood vessels shut","Binds one of the strongest vasoconstrictors known. Bosentan blocks it in pulmonary hypertension."),
+   R("Prostaglandin EP4 receptor","PTGER4","A","s","Gs","Immune cells, gut, bone","Fuels inflammation and pain","Ibuprofen works partly by starving this receptor of its ligand, PGE2.")],
+F:[R("Frizzled 7","FZD7","F","o","Non-canonical (Dishevelled)","Gut stem cells","Keeps stem cells renewing the gut lining","A Wnt receptor named after a fruit fly mutant with frizzled bristles."),
+   R("FSH receptor","FSHR","A","s","Gs","Ovary, testis","Grows egg follicles and supports sperm production","Recombinant FSH acts here to stimulate the ovaries in IVF."),
+   R("Formyl peptide receptor 1","FPR1","A","i","Gi","White blood cells","Sends immune cells towards bacteria","Lets immune cells smell bacteria by detecting their formylated peptides.")],
+G:[R("GLP-1 receptor","GLP1R","B1","s","Gs","Pancreas, brain, stomach","Releases insulin after meals and makes you feel full","The receptor behind semaglutide. Its large extracellular domain grabs the peptide first."),
+   R("GABA-B receptor","GABBR1 + GABBR2","C","i","Gi/o","Brain, spinal cord","Slows nerve firing and relaxes muscles","An obligate pair: one subunit binds GABA, the other couples the G protein. Baclofen activates it."),
+   R("Glucagon receptor","GCGR","B1","s","Gs","Liver","Raises blood sugar between meals","Tells the liver to break down glycogen and make new glucose."),
+   R("Metabotropic glutamate mGlu5","GRM5","C","q","Gq","Brain","Strengthens connections between neurons as you learn","A Venus flytrap domain snaps shut on glutamate to switch it on.")],
+H:[R("Histamine H1 receptor","HRH1","A","q","Gq","Airways, blood vessels, skin, brain","Causes itch, sneezing and swelling, and keeps you awake","Old antihistamines cross into the brain and block it there, which is why they make you drowsy."),
+   R("Histamine H2 receptor","HRH2","A","s","Gs","Stomach","Turns on stomach acid","Blocking it with cimetidine made one of the first blockbuster drugs."),
+   R("Niacin receptor HCA2","HCAR2","A","i","Gi","Fat tissue, skin","Slows fat breakdown and causes niacin flushing","Explains both niacin's effect on blood lipids and its famous red skin flush.")],
+I:[R("Prostacyclin IP receptor","PTGIR","A","s","Gs","Blood vessels, platelets","Relaxes blood vessels and stops clots","Selexipag activates it to treat pulmonary hypertension.")],
+J:[R("Box jellyfish opsin","Tripedalia opsin","A","s","Gs","Box jellyfish eyes","Lets an animal with no brain see light","No human GPCR starts with J. Box jellyfish have 24 eyes built on genuine opsin GPCRs.")],
+K:[R("Kisspeptin receptor","KISS1R","A","q","Gq","Brain (hypothalamus)","Starts puberty","Kisspeptin is named after Hershey's Kisses, made in the town where it was discovered."),
+   R("κ-opioid receptor","OPRK1","A","i","Gi/o","Brain, spinal cord, skin nerves","Dulls pain and itch, but can lower mood","Difelikefalin activates it outside the brain to treat itch in kidney disease.")],
+L:[R("Cysteinyl leukotriene CysLT1","CYSLTR1","A","q","Gq (also Gi/o)","Airways","Tightens airways and adds mucus in asthma","Montelukast blocks it to control asthma."),
+   R("LH/hCG receptor","LHCGR","A","s","Gs","Ovary, testis","Triggers ovulation and testosterone production","Pregnancy hormone hCG and luteinizing hormone share this receptor."),
+   R("LPA1 receptor","LPAR1","A","i","Gi (also Gq, G12/13)","Lungs, nerves","Drives scarring in damaged tissue","A drug target in lung fibrosis.")],
+M:[R("Muscarinic M2 receptor","CHRM2","A","i","Gi/o","Heart","Slows the heartbeat","This is how the vagus nerve calms your heart."),
+   R("Muscarinic M3 receptor","CHRM3","A","q","Gq","Airways, gut, bladder, glands","Squeezes smooth muscle and makes saliva and sweat","Tiotropium blocks it to open the airways in COPD."),
+   R("Melanocortin MC4 receptor","MC4R","A","s","Gs","Brain (hypothalamus)","Tells you to stop eating","Faulty MC4R is the commonest single-gene cause of obesity. Setmelanotide activates it."),
+   R("Melatonin MT1 receptor","MTNR1A","A","i","Gi","Brain (body clock)","Signals night-time and helps you fall asleep","Reads the melatonin signal that rises in the dark.")],
+N:[R("Neuropeptide Y Y1 receptor","NPY1R","A","i","Gi/o","Brain, blood vessels","Makes you hungry and narrows blood vessels","Neuropeptide Y is one of the strongest appetite signals in the brain."),
+   R("Neurotensin NTS1 receptor","NTSR1","A","q","Gq","Brain, gut","Tunes dopamine signalling and gut movement","A model receptor for studying biased signalling."),
+   R("Nociceptin receptor","OPRL1","A","i","Gi/o","Brain, spinal cord","Modulates pain and stress","The fourth opioid-family receptor, yet morphine barely touches it.")],
+O:[R("μ-opioid receptor","OPRM1","A","i","Gi/o","Brain, spinal cord, gut","Blocks pain, but slows breathing and the gut","Morphine and fentanyl act here. Biased agonists try to keep the pain relief without stopping breathing."),
+   R("Orexin OX2 receptor","HCRTR2","A","q","Gq","Brain","Keeps you awake and alert","Losing orexin signalling causes narcolepsy. Suvorexant blocks it to help sleep."),
+   R("Olfactory receptor","OR family","A","t","Golf","Nose","Lets you smell","You carry about 400 working odorant receptors, the biggest GPCR family of all."),
+   R("Oxytocin receptor","OXTR","A","q","Gq","Uterus, breast, brain","Contracts the uterus and releases milk","Atosiban blocks it to delay preterm birth.")],
+P:[R("Protease-activated receptor 1","F2R","A","12","G12/13 (also Gq)","Platelets, blood vessels","Activates platelets when you bleed","Thrombin cuts its tail, and the new end folds back to activate it."),
+   R("P2Y12 receptor","P2RY12","A","i","Gi","Platelets","Makes platelets stick together","Clopidogrel and ticagrelor block it to prevent heart attacks."),
+   R("PTH1 receptor","PTH1R","B1","s","Gs (also Gq)","Bone, kidney","Raises blood calcium and remodels bone","Daily pulses of teriparatide through this receptor build bone.")],
+Q:[R("QRFP receptor","QRFPR","A","q","Gq","Brain, bone","Influences appetite and bone growth","The only human GPCR family that starts with Q.")],
+R:[R("Rhodopsin","RHO","A","t","Transducin (Gt)","Eye (rod cells)","Lets you see in dim light","One photon flips its retinal and you see. The first GPCR structure, solved in 2000."),
+   R("Relaxin receptor RXFP1","RXFP1","A","s","Gs","Blood vessels, uterus","Relaxes tissues and vessels during pregnancy","Relaxin also loosens ligaments ahead of birth.")],
+S:[R("Smoothened","SMO","F","i","Gi","Embryo, primary cilium","Shapes fingers, brain and spinal cord in the embryo","Hedgehog never touches Smoothened. It binds Patched, a 12-pass membrane protein that keeps cholesterol away from Smoothened. Once Hedgehog switches Patched off, cholesterol reaches Smoothened and turns it on. Vismodegib blocks Smoothened in basal cell skin cancer."),
+   R("Serotonin 5-HT2A receptor","HTR2A","A","q","Gq","Brain cortex, platelets","Shapes perception and mood","Psilocybin and LSD act here."),
+   R("Somatostatin SST2 receptor","SSTR2","A","i","Gi","Pituitary, gut","Switches off hormone release","Octreotide targets it in hormone-secreting tumours."),
+   R("S1P1 receptor","S1PR1","A","i","Gi","Immune cells","Lets immune cells leave lymph nodes","Fingolimod traps immune cells in lymph nodes to treat multiple sclerosis."),
+   R("Secretin receptor","SCTR","B1","s","Gs","Pancreas","Releases bicarbonate to neutralise stomach acid","Secretin was the first hormone ever discovered, in 1902.")],
+T:[R("Bitter taste receptor","TAS2R family","T","t","Gustducin","Tongue, airways","Detects bitter, possibly toxic food","About 25 kinds detect bitterness. Some also sit in your airways and gut."),
+   R("TSH receptor","TSHR","A","s","Gs","Thyroid","Makes thyroid hormone","Antibodies that switch it on cause Graves' disease."),
+   R("Tachykinin NK1 receptor","TACR1","A","q","Gq","Brain, gut","Triggers nausea and pain signals","Aprepitant blocks it to prevent chemotherapy nausea."),
+   R("Trace amine receptor TAAR1","TAAR1","A","s","Gs","Brain","Fine-tunes dopamine signalling","A newer psychiatry target that works without blocking dopamine D2.")],
+U:[R("Urotensin II receptor","UTS2R","A","q","Gq","Blood vessels, heart","Constricts blood vessels","Its peptide is among the strongest vasoconstrictors found in mammals.")],
+V:[R("Vasopressin V2 receptor","AVPR2","A","s","Gs","Kidney","Saves water and concentrates urine","Desmopressin activates it to stop bedwetting; tolvaptan blocks it."),
+   R("VIP receptor VPAC1","VIPR1","B1","s","Gs","Gut, immune cells","Relaxes gut muscle and calms inflammation","Responds to vasoactive intestinal peptide.")],
+W:[R("Wnt receptor Frizzled 4","FZD4","F","o","Non-canonical (Dishevelled)","Retina","Builds blood vessels in the eye","Mutations cause a rare inherited eye disease.")],
+X:[R("XC chemokine receptor 1","XCR1","A","i","Gi","Dendritic cells","Helps launch killer T cells against infections and tumours","Marks the immune cells that show tumour pieces to killer T cells.")],
+Y:[R("Neuropeptide Y Y2 receptor","NPY2R","A","i","Gi/o","Gut, brain","Tells you that you are full after a meal","The gut hormone PYY acts here.")],
+Z:[R("Zinc-sensing receptor","GPR39","A","q","Gq (also Gs)","Gut, brain","Senses zinc and helps heal the gut lining","Senses zinc ions instead of a hormone.")]
+};
+
+var HX=[18,31,44,57,70,83,96], TOP=[104,100,106,102,104,100,106], BOT=[196,200,194,198,196,200,194];
+
+function shade(hex,amt){
+  var n=parseInt(hex.slice(1),16),r=(n>>16)+amt,g=((n>>8)&255)+amt,b=(n&255)+amt;
+  r=Math.max(0,Math.min(255,r));g=Math.max(0,Math.min(255,g));b=Math.max(0,Math.min(255,b));
+  return "#"+((1<<24)+(r<<16)+(g<<8)+b).toString(16).slice(1);
+}
+function esc(s){return String(s).replace(/[&<>"]/g,function(m){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]})}
+
+function receptor(item,letter,opt){
+  opt=opt||{};
+  var col=CL[item.c].c, dk=shade(col,-45), g=GK[item.k], s="";
+  s+='<g class="'+(item.c==="C"?"cc":"")+'">';
+  /* class-specific extracellular domains */
+  if(item.c==="B1"){
+    s+='<path d="M23.5 '+TOP[0]+' Q20 96 26 90" stroke="'+dk+'" stroke-width="3" fill="none" stroke-linecap="round"/>';
+    s+='<ellipse cx="27" cy="74" rx="16" ry="19" fill="'+col+'" stroke="'+dk+'" stroke-width="2"/>';
+    s+='<ellipse cx="22" cy="68" rx="4" ry="6" fill="#fff" opacity=".3"/>';
+  } else if(item.c==="F"){
+    s+='<path d="M23.5 '+TOP[0]+' Q22 96 27 92" stroke="'+dk+'" stroke-width="3" fill="none" stroke-linecap="round"/>';
+    s+='<circle cx="28" cy="80" r="13" fill="'+col+'" stroke="'+dk+'" stroke-width="2"/>';
+    s+='<circle cx="28" cy="80" r="5" fill="#fff" opacity=".35"/>';
+  } else if(item.c==="B2"){
+    s+='<path d="M23.5 '+TOP[0]+' Q16 80 26 58" stroke="'+dk+'" stroke-width="3" fill="none" stroke-linecap="round"/>';
+    s+='<rect x="12" y="20" width="30" height="40" rx="12" fill="'+col+'" stroke="'+dk+'" stroke-width="2"/>';
+    s+='<rect x="17" y="26" width="6" height="18" rx="3" fill="#fff" opacity=".3"/>';
+  } else if(item.c==="C"){
+    s+='<path d="M50 74 Q44 88 49.5 '+TOP[2]+'" stroke="'+dk+'" stroke-width="3" fill="none" stroke-linecap="round"/>';
+    s+='<path d="M75 74 Q81 88 75.5 '+TOP[4]+'" stroke="'+dk+'" stroke-width="3" fill="none" stroke-linecap="round"/>';
+  } else {
+    s+='<path d="M23.5 '+TOP[0]+' q-6 -9 -2 -18" stroke="'+dk+'" stroke-width="3" fill="none" stroke-linecap="round"/>';
+  }
+  /* loops */
+  for(var i=0;i<6;i++){
+    var x1=HX[i]+5.5,x2=HX[i+1]+5.5,m=(x1+x2)/2,y1,y2,q;
+    if(i%2===0){y1=BOT[i];y2=BOT[i+1];q=Math.max(y1,y2)+(i===4?20:12);}
+    else{y1=TOP[i];y2=TOP[i+1];q=Math.min(y1,y2)-(i===3?22:12);}
+    s+='<path d="M'+x1+' '+y1+' Q'+m+' '+q+' '+x2+' '+y2+'" stroke="'+dk+'" stroke-width="3" fill="none" stroke-linecap="round"/>';
+  }
+  s+='<path d="M101.5 '+BOT[6]+' q9 10 4 21" stroke="'+dk+'" stroke-width="3" fill="none" stroke-linecap="round"/>';
+  /* helices */
+  for(var h=0;h<7;h++){
+    var hel='<rect x="'+HX[h]+'" y="'+TOP[h]+'" width="11" height="'+(BOT[h]-TOP[h])+'" rx="5.5" fill="'+col+'" stroke="'+dk+'" stroke-width="1.5"/>'+
+            '<rect x="'+(HX[h]+2.5)+'" y="'+(TOP[h]+6)+'" width="2.6" height="'+(BOT[h]-TOP[h]-30)+'" rx="1.3" fill="#fff" opacity=".35"/>';
+    s+= h===5 ? '<g class="tm6">'+hel+'</g>' : hel;
+  }
+  if(opt.face){
+    s+='<circle cx="40" cy="157" r="3.6" fill="#F48FB1" opacity=".75"/><circle cx="85" cy="157" r="3.6" fill="#F48FB1" opacity=".75"/>';
+    s+='<g class="eyes"><circle class="eye" cx="49.5" cy="140" r="6"/><circle class="eye" cx="75.5" cy="140" r="6"/>';
+    s+='<circle class="pupil pl" cx="50.5" cy="141" r="2.8"/><circle class="pupil pr" cx="76.5" cy="141" r="2.8"/></g>';
+    s+='<path class="smile" d="M53 158 Q62.5 168 72 158"/>';
+    s+='<path class="grin" d="M51 156 Q62.5 176 74 156 Z" fill="#1D1B3F" stroke="#1D1B3F" stroke-width="1.5" stroke-linejoin="round"/>';
+    s+='<path class="frown smile-x" d="M53 166 Q62.5 156 72 166" fill="none" stroke="#1D1B3F" stroke-width="2.2" stroke-linecap="round"/>';
+    s+='<path class="flat" d="M54 162 L71 162" fill="none" stroke="#1D1B3F" stroke-width="2.2" stroke-linecap="round"/>';
+  }
+  /* class C venus flytrap lobes */
+  /* ligand = the receptor's natural ligand (or a drug in the lab) */
+  s+='<g class="lig"><circle class="ligc" cx="62.5" cy="50" r="13"/>'+
+     '<ellipse cx="58" cy="45.5" rx="4" ry="2.6" fill="#fff" opacity=".75"/></g>';
+  /* class C venus flytrap jaws, drawn over the ligand so they grip it */
+  if(item.c==="C"){
+    s+='<g class="vl"><path d="M55 22 A24 28 0 0 0 55 78" fill="none" stroke="'+dk+'" stroke-width="10" stroke-linecap="round"/>'+
+       '<path d="M55 22 A24 28 0 0 0 55 78" fill="none" stroke="'+col+'" stroke-width="6.5" stroke-linecap="round"/></g>';
+    s+='<g class="vr"><path d="M70 22 A24 28 0 0 1 70 78" fill="none" stroke="'+dk+'" stroke-width="10" stroke-linecap="round"/>'+
+       '<path d="M70 22 A24 28 0 0 1 70 78" fill="none" stroke="'+col+'" stroke-width="6.5" stroke-linecap="round"/></g>';
+  }
+  if(opt.burst && item.k!=="o"){
+    var bc=GK[item.k].c, B=[[16,214],[32,262],[104,212],[112,268],[10,246],[74,272],[30,232],[118,232],[50,276],[100,238]];
+    B.forEach(function(d,j){s+='<circle class="burst" cx="'+d[0]+'" cy="'+d[1]+'" r="'+(j%3?3.4:4.8)+'" fill="'+bc+'" style="transition-delay:'+(1.25+j*0.07).toFixed(2)+'s"/>'});
+  }
+  /* G protein */
+  s+='<g class="ga"><ellipse cx="58" cy="238" rx="26" ry="17" fill="'+g.c+'" stroke="'+shade(g.c,-50)+'" stroke-width="1.5"/>'+
+     '<ellipse cx="48" cy="231" rx="8" ry="4" fill="#fff" opacity=".3"/>';
+  if(item.k==="o"){
+    s+='<text class="gtxt" x="58" y="239" text-anchor="middle" dominant-baseline="central">DVL</text>';
+  } else {
+    s+='<text class="gtxt gdp" x="58" y="239" text-anchor="middle" dominant-baseline="central">GDP</text>'+
+       '<text class="gtxt gtp" x="58" y="239" text-anchor="middle" dominant-baseline="central">GTP</text>';
+  }
+  s+='</g>';
+  if(item.k!=="o"){
+    s+='<g class="bgr"><ellipse class="bgc" cx="90" cy="252" rx="15" ry="11"/><circle class="bgc" cx="103" cy="241" r="5"/></g>';
+  }
+  s+='</g>';
+  return s;
+}
+
+var NAT={"ADRB2":{n:"Adrenaline",ab:"Ad"},"OPRM1":{n:"β-Endorphin",ab:"βE"},"HRH1":{n:"Histamine",ab:"Hi"}};
+var NATTXT={"SMO":{label:"activated by cholesterol (Hedgehog acts via Patched)",
+  now:"with its direct activator, <b>cholesterol</b>. Hedgehog itself binds Patched, a 12-pass protein that is not a GPCR, and that frees cholesterol to reach Smoothened.",
+  when:"When Hedgehog switches off Patched and cholesterol reaches Smoothened"}};
+function ligLabel(it){return NATTXT[it.g]?NATTXT[it.g].label:"binds "+natLig(it).n}
+function ligNow(it){return NATTXT[it.g]?NATTXT[it.g].now:"with its natural ligand, <b>"+esc(natLig(it).n)+"</b>."}
+function ligWhen(it){return NATTXT[it.g]?NATTXT[it.g].when:"When "+natLig(it).n+" binds"}
+function theName(n){return (/receptor/i.test(n)?"the ":"")+n}
+function natLig(it){ return NAT[it.g] || (LIG[it.g]&&LIG[it.g][0]) || {n:"its ligand",ab:"L"}; }
+function cell(item,letter,opt){
+  opt=opt||{}; opt.burst=true; opt.badge=letter;
+  return '<svg viewBox="0 0 120 280" width="120" height="280" aria-hidden="true">'+receptor(item,natLig(item).ab,opt)+'</svg>';
+}
+
+/* Hero scene with drawn membrane */
+function membrane(W){
+  var s='<rect class="ext" x="0" y="0" width="'+W+'" height="116"/><rect class="int" x="0" y="184" width="'+W+'" height="96"/>',t1="",t2="",hd="";
+  for(var x=6;x<W;x+=12){
+    t1+='<line class="ltail" x1="'+(x-1.5)+'" y1="121" x2="'+(x-1.5)+'" y2="148" stroke-width="1.6"/><line class="ltail" x1="'+(x+1.5)+'" y1="121" x2="'+(x+1.5)+'" y2="146" stroke-width="1.6"/>';
+    t2+='<line class="ltail" x1="'+(x-1.5)+'" y1="152" x2="'+(x-1.5)+'" y2="179" stroke-width="1.6"/><line class="ltail" x1="'+(x+1.5)+'" y1="154" x2="'+(x+1.5)+'" y2="179" stroke-width="1.6"/>';
+    hd+='<circle class="lhead" cx="'+x+'" cy="116" r="5"/><circle class="lhead" cx="'+x+'" cy="184" r="5"/>';
+  }
+  return s+'<g class="tails1">'+t1+'</g><g class="tails2">'+t2+'</g>'+hd+
+    '<text class="zone" x="14" y="24">Outside the cell</text><text class="zone" x="14" y="268">Inside the cell</text>';
+}
+function heroSVG(item,letter,ligab){
+  var gk=item.k;
+  var W=360,s='<svg viewBox="0 0 '+W+' 280" role="img" aria-label="Cartoon GPCR in a cell membrane binding its ligand and activating a G protein">';
+  s+=membrane(W);
+  s+='<g transform="translate(120,0)">'+receptor({c:item.c,k:gk},ligab,{face:true,badge:letter})+'</g>';
+  if(gk==="o") return s+'</svg>';
+  var mc=GK[gk].c,dots=[[72,214],[96,252],[262,212],[288,250],[314,226],[48,240],[236,262],[120,268]];
+  dots.forEach(function(d,j){s+='<circle class="msg" cx="'+d[0]+'" cy="'+d[1]+'" r="'+(j%2?4:5.5)+'" fill="'+mc+'" opacity="0"/>'});
+  s+='</svg>';
+  return s;
+}
+
+var heroEl=document.getElementById("heroart"), heroTimer=null;
+function selItem(){ return state.letters.length ? itemAt(state.sel) : {c:"A",k:"s",g:"ADRB2",n:"β2-adrenergic receptor"}; }
+function selLetter(){ return state.letters.length ? state.letters[state.sel] : "?"; }
+var reduce=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+function heroCycle(){
+  var it=selItem();
+  heroEl.classList.remove("on");
+  heroEl.innerHTML=heroSVG(it,selLetter(),natLig(it).ab);
+  void heroEl.offsetWidth;
+  setTimeout(function(){heroEl.classList.add("on")},reduce?0:500);
+}
+function startHero(){
+  clearInterval(heroTimer); heroCycle();
+  if(!reduce) heroTimer=setInterval(heroCycle,4200);
+}
+
+/* State */
+var state={name:"",letters:[],pick:[],sel:0};
+var el=function(id){return document.getElementById(id)};
+
+function pickFor(L,avoid){
+  var opts=DB[L]; if(opts.length===1) return 0;
+  var i; do{i=Math.floor(Math.random()*opts.length)}while(i===avoid);
+  return i;
+}
+function itemAt(i){return DB[state.letters[i]][state.pick[i]]}
+
+function bind(name){
+  var clean=name.trim().replace(/\s+/g," ");
+  var letters=clean.toUpperCase().replace(/[^A-Z]/g,"").split("");
+  if(!letters.length){el("err").textContent="Enter at least one letter from A to Z.";return}
+  el("err").textContent="";
+  state.name=clean; state.letters=letters; state.sel=0;
+  state.pick=letters.map(function(){return 0});
+  startHero(); drawStep();
+  render(true);
+  el("res").classList.add("show");
+  history.replaceState(null,"","?name="+encodeURIComponent(clean));
+}
+
+function render(animate){
+  var n=state.letters.length;
+  el("title").textContent=state.name+", bound and signaling";
+  var row=el("row"),h="";
+  state.letters.forEach(function(L,i){
+    var it=itemAt(i);
+    h+='<button class="rc" type="button" data-i="'+i+'" aria-pressed="'+(i===state.sel)+'" aria-label="Letter '+L+': '+esc(it.n)+'">'+
+       '<div class="cellwrap">'+cell(it,L)+'</div><div class="lab"><span class="lt">'+L+'</span>'+esc(it.n)+'<span class="binds">'+esc(ligLabel(it))+'</span></div></button>';
+  });
+  row.innerHTML=h;
+  var cells=row.querySelectorAll(".cellwrap");
+  cells.forEach(function(c,i){
+    if(!animate||reduce){c.classList.add("on");return}
+    setTimeout(function(){c.classList.add("on")},350+i*260);
+  });
+  body(); detail(); profile(); labLoad(); quizStart();
+}
+
+function detail(){
+  var i=state.sel,L=state.letters[i],it=itemAt(i),g=GK[it.k],c=CL[it.c];
+  el("det").innerHTML=
+    '<div class="big" style="border-color:'+c.c+'">'+L+'</div>'+
+    '<div class="nm">'+esc(it.n)+'</div><div class="gene">Gene: '+esc(it.g)+'</div>'+
+    '<p class="does">'+esc(it.b)+'</p>'+
+    '<p class="where"><b>Where:</b> '+esc(it.w)+'</p>'+
+    '<div class="chips"><span class="chip" style="background:'+g.c+'">'+esc(it.gt)+', '+esc(g.nick)+'</span>'+
+    '<span class="chip" style="background:'+c.c+'">'+esc(c.n)+'</span></div>'+
+    ladder(it)+
+    '<p class="dyk"><b>Did you know?</b> '+esc(it.f)+'</p>';
+  el("det").querySelectorAll("[data-n]").forEach(function(b){countUp(b,0,+b.getAttribute("data-n"),900)});
+  bodySel();
+}
+var MSG={s:"cAMP made","i":"cAMP cut back",q:"Ca²⁺ ions released","12":"RhoA switched on",t:"sense signals sent"};
+function ladder(it){
+  if(it.k==="o") return '<p class="lnote" style="margin-top:14px">Frizzleds pass their signal through Dishevelled instead of a classic second messenger.</p>';
+  return '<div class="ladder" aria-label="Signal amplification"><div><b>1</b><span>receptor</span></div><i aria-hidden="true">→</i>'+
+    '<div><b data-n="20">0</b><span>G proteins</span></div><i aria-hidden="true">→</i>'+
+    '<div><b data-n="2000">0</b><span>'+MSG[it.k]+'</span></div></div>'+
+    '<p class="lnote">Cartoon numbers: real amplification differs between receptors.</p>';
+}
+function countUp(node,from,to,ms){
+  if(reduce){node.textContent=to.toLocaleString("en-US");return}
+  var t0=null;
+  function f(t){ if(!t0)t0=t; var k=Math.min(1,(t-t0)/ms), e=1-Math.pow(1-k,3);
+    node.textContent=Math.round(from+(to-from)*e).toLocaleString("en-US"); if(k<1)requestAnimationFrame(f)}
+  requestAnimationFrame(f);
+}
+
+function profile(){
+  var cnt={}; GORDER.forEach(function(k){cnt[k]=0});
+  state.letters.forEach(function(L,i){cnt[itemAt(i).k]++});
+  var bar="",leg="";
+  GORDER.forEach(function(k){
+    if(!cnt[k]) return;
+    bar+='<span style="flex:'+cnt[k]+';background:'+GK[k].c+'" title="'+GK[k].n+'"></span>';
+    leg+='<li><span class="sw" style="background:'+GK[k].c+'"></span><span>'+GK[k].n+', '+GK[k].nick+
+         '<br><span class="dsc">'+GK[k].d+'</span></span><span class="ct">'+cnt[k]+'</span></li>';
+  });
+  el("bar").innerHTML=bar; el("legend").innerHTML=leg;
+  var tot=0; state.letters.forEach(function(L,i){if(itemAt(i).k!=="o")tot+=2000});
+  el("total").innerHTML='Messengers your name just made: <b id="totn">0</b>';
+  countUp(el("totn"),0,tot,1800);
+}
+
+/* Quiz */
+var Q={order:[],idx:0,score:0,mode:"body"};
+function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t}return a}
+var ALL=[];Object.keys(DB).forEach(function(L){DB[L].forEach(function(it){ALL.push(it)})});
+function quizStart(){
+  var seen={},ord=[],n=state.letters.length;
+  for(var s=0;s<n;s++){var i=(state.sel+s)%n,L=state.letters[i],key=L+state.pick[i];if(!seen[key]){seen[key]=1;ord.push(i)}}
+  Q.order=ord.slice(0,8); Q.idx=0; Q.score=0;
+  quizRound();
+}
+function quizHead(extra){
+  return '<div class="qhead"><h3>'+(Q.mode==="body"?"What does it do?":"Guess the G protein")+'</h3>'+
+    '<div class="modes" role="group" aria-label="Quiz type">'+
+    '<button type="button" data-mode="body" aria-pressed="'+(Q.mode==="body")+'">Body response</button>'+
+    '<button type="button" data-mode="g" aria-pressed="'+(Q.mode==="g")+'">G protein</button></div></div>'+
+    '<p class="score" id="qscore" style="margin:8px 0 0">'+extra+'</p>';
+}
+function wireModes(){
+  el("quiz").querySelectorAll("[data-mode]").forEach(function(b){
+    b.onclick=function(){Q.mode=b.getAttribute("data-mode");quizStart()};
+  });
+}
+function quizRound(){
+  var box=el("quiz"),t=Q.order.length;
+  if(Q.idx>=t){
+    var msg = Q.score===t ? "Perfect score. You think like a receptor." :
+      Q.score>=t/2 ? "Nice work. Swap receptors or switch quiz type for a new round." :
+      "Every miss is a new fact learned. Swap receptors and try again.";
+    box.innerHTML=quizHead(Q.score+" of "+t+" correct")+
+      '<p class="qq" style="margin-top:12px">'+msg+'</p><button class="btn qnext" id="qagain" type="button">Play again</button>';
+    el("qagain").onclick=quizStart; wireModes();
+    if(Q.score===t) confetti(box);
+    return;
+  }
+  var i=Q.order[Q.idx],L=state.letters[i],it=itemAt(i),opts,question;
+  if(Q.mode==="body"){
+    var pool=shuffle(ALL.filter(function(x){return x.b!==it.b})),picked=[it.b];
+    for(var p=0;p<pool.length&&picked.length<4;p++){if(picked.indexOf(pool[p].b)<0)picked.push(pool[p].b)}
+    picked=shuffle(picked);
+    question='Letter '+L+' stands for '+esc(theName(it.n))+'. '+esc(ligWhen(it))+', what happens next?</p><p class="where" style="margin:-8px 0 14px;color:var(--ink-2)">Found in: '+esc(it.w);
+    opts='<div class="opts col" id="opts">'+picked.map(function(b){
+      return '<button class="opt" type="button" data-a="'+esc(b)+'">'+esc(b)+'</button>'}).join("")+'</div>';
+  } else {
+    question='Letter '+L+' stands for '+esc(theName(it.n))+'. Which G protein does it mainly call?';
+    opts='<div class="opts" id="opts">'+GORDER.map(function(k){
+      return '<button class="opt" type="button" data-a="'+k+'"><span class="sw" style="background:'+GK[k].c+'"></span>'+GK[k].n+'</button>'}).join("")+'</div>';
+  }
+  var answer = Q.mode==="body" ? it.b : it.k;
+  box.innerHTML=quizHead("Round "+(Q.idx+1)+" of "+t+", score "+Q.score)+
+    '<div class="qbody"><div class="qart" id="qart">'+qArt(it,L,Q.mode==="body")+'</div><div>'+
+    '<p class="qq">'+question+'</p>'+opts+'<div class="fb" id="fb"></div></div></div>';
+  wireModes();
+  el("opts").onclick=function(e){
+    var b=e.target.closest(".opt"); if(!b||b.disabled) return;
+    var a=b.getAttribute("data-a"),ok=a===answer;
+    if(ok) Q.score++;
+    el("qscore").textContent="Round "+(Q.idx+1)+" of "+t+", score "+Q.score;
+    el("opts").querySelectorAll(".opt").forEach(function(o){
+      o.disabled=true;
+      if(o.getAttribute("data-a")===answer) o.classList.add("right");
+      else if(o===b) o.classList.add("wrong");
+    });
+    var g=GK[it.k];
+    el("fb").innerHTML = Q.mode==="body"
+      ? (ok?"<b>Right.</b> ":"<b>Not quite.</b> ")+"It couples to "+esc(it.gt)+", "+esc(g.nick)+", which "+esc(g.d)+". "+esc(it.f)
+      : (ok?"<b>Right.</b> ":"<b>Not quite.</b> It couples to "+esc(it.gt)+". ")+esc(g.n)+" is "+esc(g.nick)+": it "+esc(g.d)+". In the body: "+esc(it.b.charAt(0).toLowerCase()+it.b.slice(1))+".";
+    var art=el("qart"); art.innerHTML=qArt(it,L,true);
+    requestAnimationFrame(function(){requestAnimationFrame(function(){art.firstChild.classList.add("on",ok?"m-happy":"m-dizzy")})});
+    var nb=document.createElement("button");
+    nb.className="btn qnext"; nb.type="button";
+    nb.textContent= Q.idx+1<t ? "Next receptor" : "See my score";
+    nb.onclick=function(){Q.idx++;quizRound()};
+    el("fb").parentNode.appendChild(nb); nb.focus();
+  };
+}
+function qArt(it,L,reveal){
+  /* hide coupling colour until answered */
+  var shown=reveal?it:{c:it.c,k:"o",n:it.n};
+  var rc=receptor(shown,natLig(it).ab,{face:true,burst:reveal,badge:L});
+  if(!reveal) rc=rc.replace(/>DVL</,">?<");
+  return '<div><svg viewBox="0 0 120 280" width="120" height="280" aria-hidden="true">'+
+    '<rect class="ext" x="0" y="0" width="120" height="116"/><rect class="int" x="0" y="184" width="120" height="96"/>'+
+    memSlice()+rc+'</svg></div>';
+}
+function memSlice(){
+  var s="";
+  for(var x=6;x<120;x+=12){
+    s+='<line class="ltail" x1="'+x+'" y1="121" x2="'+x+'" y2="179" stroke-width="3" opacity=".7"/>';
+    s+='<circle class="lhead" cx="'+x+'" cy="116" r="5"/><circle class="lhead" cx="'+x+'" cy="184" r="5"/>';
+  }
+  return s;
+}
+
+/* Body map */
+var ORG=[["brain",/brain|hypothalamus|cortex|body clock|pituitary/i,"Brain"],["eye",/eye|retina|rod cell/i,"Eyes"],
+ ["nose",/nose/i,"Nose"],["mouth",/tongue|glands/i,"Mouth and glands"],["thyroid",/thyroid/i,"Thyroid"],
+ ["lungs",/lung|airway/i,"Lungs"],["heart",/heart/i,"Heart"],["liver",/liver/i,"Liver"],["stomach",/stomach/i,"Stomach"],
+ ["pancreas",/pancreas/i,"Pancreas"],["kidney",/kidney|adrenal/i,"Kidneys"],["gut",/gut/i,"Gut"],
+ ["pelvis",/uterus|ovary|testis|bladder|embryo/i,"Reproductive organs"],["vessels",/vessel/i,"Blood vessels"],
+ ["blood",/platelet/i,"Platelets"],["immune",/immune|white blood|dendritic|lymph/i,"Immune system"],["bone",/bone/i,"Bone"],
+ ["muscle",/muscle/i,"Muscle"],["skin",/skin/i,"Skin"],["fat",/fat/i,"Fat"],["spine",/spinal|nerve/i,"Spinal cord and nerves"]];
+function organsOf(it){
+  if(/jellyfish/i.test(it.w)) return [];
+  return ORG.filter(function(o){return o[1].test(it.w)}).map(function(o){return o[0]});
+}
+var BODY=
+ '<g class="silg"><circle class="sil" cx="110" cy="46" r="30"/><rect class="sil" x="100" y="70" width="20" height="22"/>'+
+ '<rect class="sil" x="34" y="94" width="24" height="150" rx="12" transform="rotate(8 46 94)"/>'+
+ '<rect class="sil" x="162" y="94" width="24" height="150" rx="12" transform="rotate(-8 174 94)"/>'+
+ '<rect class="sil" x="70" y="236" width="34" height="186" rx="17"/><rect class="sil" x="116" y="236" width="34" height="186" rx="17"/>'+
+ '<rect class="sil" x="62" y="86" width="96" height="172" rx="36"/></g>'+
+ '<line class="orgl" data-o="spine" x1="110" y1="96" x2="110" y2="234" stroke-dasharray="2 5"/>'+
+ '<path class="orgl" data-o="vessels" d="M68 104 Q52 170 40 236"/>'+
+ '<path class="org" data-o="blood" d="M190 186 C183 197 182 204 190 210 C198 204 197 197 190 186Z"/>'+
+ '<ellipse class="org" data-o="brain" cx="110" cy="34" rx="21" ry="13"/>'+
+ '<circle class="org" data-o="eye" cx="99" cy="49" r="3.6"/><circle class="org" data-o="eye" cx="121" cy="49" r="3.6"/>'+
+ '<ellipse class="org" data-o="nose" cx="110" cy="58" rx="3" ry="5"/>'+
+ '<ellipse class="org" data-o="mouth" cx="110" cy="68" rx="8" ry="3"/>'+
+ '<ellipse class="org" data-o="thyroid" cx="110" cy="84" rx="10" ry="4"/>'+
+ '<circle class="org" data-o="immune" cx="80" cy="100" r="4"/><circle class="org" data-o="immune" cx="140" cy="100" r="4"/>'+
+ '<circle class="org" data-o="immune" cx="90" cy="244" r="4"/><circle class="org" data-o="immune" cx="130" cy="244" r="4"/>'+
+ '<ellipse class="org" data-o="lungs" cx="91" cy="124" rx="15" ry="25"/><ellipse class="org" data-o="lungs" cx="129" cy="124" rx="15" ry="25"/>'+
+ '<path class="org" data-o="heart" d="M114 147 C101 139 103 126 109.5 128 C112 129 113 131 114 133 C115 131 116 129 118.5 128 C125 126 127 139 114 147Z"/>'+
+ '<ellipse class="org" data-o="liver" cx="94" cy="162" rx="20" ry="10"/>'+
+ '<ellipse class="org" data-o="stomach" cx="127" cy="164" rx="12" ry="10"/>'+
+ '<ellipse class="org" data-o="pancreas" cx="112" cy="180" rx="17" ry="4"/>'+
+ '<ellipse class="org" data-o="kidney" cx="80" cy="187" rx="6" ry="10"/><ellipse class="org" data-o="kidney" cx="140" cy="187" rx="6" ry="10"/>'+
+ '<rect class="org" data-o="gut" x="88" y="193" width="44" height="35" rx="14"/>'+
+ '<ellipse class="org" data-o="fat" cx="150" cy="214" rx="5" ry="17"/>'+
+ '<ellipse class="org" data-o="pelvis" cx="110" cy="243" rx="13" ry="9"/>'+
+ '<ellipse class="org" data-o="muscle" cx="87" cy="322" rx="11" ry="40"/>'+
+ '<rect class="org" data-o="bone" x="129" y="272" width="8" height="132" rx="4"/>';
+function body(){
+  var map={};
+  state.letters.forEach(function(L,i){organsOf(itemAt(i)).forEach(function(o){
+    map[o]=map[o]||[]; if(map[o].indexOf(L)<0) map[o].push(L)})});
+  el("bodysvg").innerHTML='<svg viewBox="0 0 220 430" role="img" aria-label="Body map of where the receptors in this name work">'+BODY+'</svg>';
+  var svg=el("bodysvg");
+  Object.keys(map).forEach(function(o){
+    if(o==="skin") svg.querySelectorAll(".sil").forEach(function(n){n.classList.add("lit")});
+    svg.querySelectorAll('[data-o="'+o+'"]').forEach(function(n){n.classList.add("lit")});
+  });
+  var keys=ORG.map(function(o){return o[0]}).filter(function(k){return map[k]});
+  el("olist").innerHTML=keys.map(function(k){
+    var nm=ORG.filter(function(o){return o[0]===k})[0][2];
+    return '<li data-o="'+k+'">'+nm+'<b>'+map[k].join(" ")+'</b></li>'}).join("");
+  var hasJ=state.letters.indexOf("J")>=0;
+  el("bsub").textContent=(keys.length===1?"Your name reaches 1 part of the body.":"Your name reaches "+keys.length+" parts of the body.")+
+    (hasJ?" J lives in a jellyfish, so it sits this one out.":"")+" Tap a receptor above to see where it works.";
+}
+function bodySel(){
+  var svg=el("bodysvg"); if(!svg.firstChild) return;
+  svg.querySelectorAll(".sel").forEach(function(n){n.classList.remove("sel")});
+  organsOf(itemAt(state.sel)).forEach(function(o){
+    svg.querySelectorAll('[data-o="'+o+'"]').forEach(function(n){n.classList.add("sel")})});
+}
+el("olist").addEventListener("mouseover",function(e){var li=e.target.closest("li");if(!li)return;
+  el("bodysvg").querySelectorAll('[data-o="'+li.getAttribute("data-o")+'"]').forEach(function(n){n.classList.add("hi")})});
+el("olist").addEventListener("mouseout",function(){el("bodysvg").querySelectorAll(".hi").forEach(function(n){n.classList.remove("hi")})});
+
+/* Drug lab: ligands for every receptor */
+var TYPES={ago:"Agonist: switches the receptor on",ant:"Antagonist: blocks the receptor",par:"Partial agonist: switches it on partway",
+  inv:"Inverse agonist: pushes the receptor below its resting level",pam:"Positive allosteric modulator: binds a second site and boosts the signal",
+  nam:"Negative allosteric modulator: binds a second site and dampens the signal"};
+var TAG={ago:"Agonist",ant:"Antagonist",par:"Partial agonist",inv:"Inverse agonist",pam:"Booster (PAM)",nam:"Damper (NAM)"};
+function D(n,ab,t,aff,m,v){return {n:n,ab:ab,t:t,aff:aff,m:m,v:v}}
+var LIG={
+"ADORA2A":[D("Adenosine","Ad","ago",1,"Builds up the longer you stay awake and makes you sleepy."),D("Regadenoson","Re","ago",2,"Widens heart arteries during cardiac stress scans."),D("Caffeine","Ca","ant",2,"Sits in the pocket so adenosine can't, which is why coffee keeps you alert."),D("Istradefylline","Is","ant",3,"An A2A blocker used alongside levodopa in Parkinson's disease, first approved in Japan.")],
+"AGTR1":[D("Angiotensin II","An","ago",1,"Squeezes blood vessels and raises blood pressure."),D("Losartan","Lo","ant",3,"The first sartan. It lowers blood pressure by keeping angiotensin II out."),D("Valsartan","Va","ant",3,"Another sartan, also combined with sacubitril for heart failure.")],
+"ADGRG1":[D("Tethered peptide","Tp","ago",1,"Its own hidden peptide, unmasked when the GAIN domain is cut, switches it on."),D("Collagen III","Co","ago",1,"A natural ligand in the developing brain."),D("Dihydromunduletone","Dh","ant",2,"A plant-derived research blocker. No medicine targets this receptor yet.")],
+"BDKRB2":[D("Bradykinin","Br","ago",1,"Released at injuries. It makes vessels leak and nerves fire, causing swelling and pain."),D("Icatibant","Ic","ant",3,"Stops attacks of hereditary angioedema, where bradykinin builds up.")],
+"GRPR":[D("GRP","GR","ago",1,"Gastrin-releasing peptide carries itch signals in the spinal cord."),D("Bombesin","Bo","ago",2,"A peptide from frog skin that gave the receptor family its name."),D("RM2","RM","ant",3,"A radiolabelled antagonist used in PET scans to find prostate cancer.")],
+"CNR1":[D("Anandamide","An","ago",1,"Your own cannabinoid, named after the Sanskrit word for bliss."),D("THC","TH","par",2,"The main psychoactive compound in cannabis. A partial agonist."),D("Rimonabant","Ri","inv",3,"An inverse agonist once sold for weight loss, then withdrawn because it caused depression.")],
+"CASR":[D("Calcium","Ca","ago",1,"Blood calcium itself switches the receptor on, telling the parathyroid to make less PTH."),D("Cinacalcet","Ci","pam",9,"Binds inside the membrane, not in the calcium pocket, and makes the receptor more sensitive. Used in overactive parathyroid glands.",[95]),D("NPS-2143","NP","nam",9,"A research 'calcilytic' that makes the receptor less sensitive to calcium.",[4])],
+"CXCR4":[D("CXCL12","CX","ago",1,"The chemokine that calls stem cells home to the bone marrow."),D("Plerixafor","Pl","ant",3,"Releases stem cells into the blood so they can be collected for transplant."),D("Mavorixafor","Ma","ant",3,"A pill approved in 2024 for WHIM syndrome, a rare immune disease.")],
+"CALCRL + RAMP1":[D("CGRP","CG","ago",1,"Widens vessels around the brain and drives migraine pain."),D("Erenumab","Er","ant",3,"An antibody that blocks the receptor to prevent migraine."),D("Rimegepant","Ri","ant",3,"A 'gepant' pill that both treats and prevents migraine.")],
+"DRD2":[D("Dopamine","Do","ago",1,"Controls movement and switches off prolactin release."),D("Bromocriptine","Br","ago",2,"An agonist that lowers prolactin and helps in Parkinson's disease."),D("Aripiprazole","Ar","par",3,"A partial agonist antipsychotic. It calms too much dopamine signalling without blocking it completely."),D("Haloperidol","Ha","ant",3,"A classic antipsychotic that blocks D2. Blocking it in movement circuits can cause stiffness.")],
+"DRD1":[D("Dopamine","Do","ago",1,"Drives reward, motivation and movement."),D("Fenoldopam","Fe","ago",2,"Widens kidney blood vessels. Used for severe high blood pressure."),D("SCH-23390","SC","ant",3,"A classic research tool that blocks D1.")],
+"EDNRA":[D("Endothelin-1","En","ago",1,"One of the strongest vessel-narrowing signals the body makes."),D("Bosentan","Bo","ant",3,"Treats pulmonary arterial hypertension."),D("Aprocitentan","Ap","ant",3,"Approved in 2024 for blood pressure that resists other drugs.")],
+"PTGER4":[D("PGE2","PG","ago",1,"A prostaglandin that fuels inflammation and pain."),D("Grapiprant","Gr","ant",3,"An EP4 blocker approved for arthritis pain in dogs.")],
+"FZD7":[D("Wnt3a","Wn","ago",1,"A Wnt protein that keeps gut stem cells dividing."),D("Vantictumab","Va","ant",3,"An experimental antibody against several Frizzleds, tested in cancer.")],
+"FSHR":[D("FSH","FS","ago",1,"The pituitary hormone that grows egg follicles and supports sperm production."),D("Follitropin alfa","Fo","ago",2,"Recombinant FSH used to stimulate the ovaries in IVF.")],
+"FPR1":[D("fMLF","fM","ago",1,"A bacterial peptide. Immune cells follow it towards infection."),D("Cyclosporin H","Cy","ant",3,"A research antagonist of FPR1.")],
+"GLP1R":[D("GLP-1","GL","ago",1,"Released by the gut after a meal. It boosts insulin and makes you feel full."),D("Semaglutide","Se","ago",3,"A long-lasting GLP-1 drug for diabetes and weight loss."),D("Tirzepatide","Ti","ago",3,"Switches on the GLP-1 and GIP receptors together."),D("Avexitide","Av","ant",3,"Blocks the receptor. Being tested for low blood sugar after gastric bypass surgery.")],
+"GABBR1 + GABBR2":[D("GABA","GA","ago",1,"The brain's main calming messenger."),D("Baclofen","Ba","ago",2,"Relaxes muscles in spasticity."),D("CGP 55845","CG","ant",3,"A research antagonist used to study slow inhibition.")],
+"GCGR":[D("Glucagon","Gl","ago",1,"Tells the liver to release glucose between meals."),D("Dasiglucagon","Da","ago",2,"A stable glucagon used to rescue severe low blood sugar."),D("Volagidemab","Vo","ant",3,"An experimental antibody that blocks the receptor to lower blood sugar.")],
+"GRM5":[D("Glutamate","Gl","ago",1,"The brain's main excitatory messenger. The Venus flytrap closes around it."),D("DHPG","DH","ago",2,"A research agonist for group I mGlu receptors."),D("Mavoglurant","Ma","nam",9,"Binds inside the membrane and dampens the receptor. Tested in fragile X syndrome.",[3])],
+"HRH2":[D("Histamine","Hi","ago",1,"Turns on acid production in the stomach."),D("Famotidine","Fa","ant",3,"Reduces stomach acid in heartburn and ulcers."),D("Cimetidine","Ci","ant",3,"The first H2 blocker, one of the first rationally designed drugs.")],
+"HCAR2":[D("β-Hydroxybutyrate","βH","ago",1,"A ketone body made during fasting. It is the receptor's natural ligand."),D("Niacin","Ni","ago",2,"Vitamin B3 at high doses. It slows fat breakdown and causes skin flushing."),D("Monomethyl fumarate","MM","ago",2,"The active form of a multiple sclerosis drug, and the reason that drug causes flushing.")],
+"PTGIR":[D("Prostacyclin","Pr","ago",1,"Made by blood vessel walls to keep vessels relaxed and platelets apart."),D("Iloprost","Il","ago",2,"An inhaled prostacyclin mimic for pulmonary hypertension."),D("Selexipag","Se","ago",3,"A pill that activates the receptor in pulmonary hypertension.")],
+"Tripedalia opsin":[D("Light","hν","ago",1,"A photon flips the retinal inside the opsin and switches it on. No drugs exist for jellyfish eyes.")],
+"KISS1R":[D("Kisspeptin","Ki","ago",1,"Starts the hormone cascade of puberty."),D("MVT-602","MV","ago",3,"A long-acting kisspeptin tested to trigger ovulation in IVF."),D("Peptide 234","P2","ant",3,"A research antagonist that blocks the puberty signal in animals.")],
+"OPRK1":[D("Dynorphin A","Dy","ago",1,"Your own κ-opioid peptide, released under stress."),D("Nalfurafine","Na","ago",3,"Approved in Japan to treat itch in dialysis patients."),D("Salvinorin A","Sa","ago",3,"A hallucinogen from the plant Salvia divinorum."),D("nor-BNI","nB","ant",3,"A long-lasting research antagonist.")],
+"CYSLTR1":[D("LTD4","LT","ago",1,"A leukotriene that tightens airways and adds mucus in asthma."),D("Montelukast","Mo","ant",3,"A daily asthma and allergy tablet."),D("Zafirlukast","Za","ant",3,"Another leukotriene blocker for asthma.")],
+"LHCGR":[D("LH","LH","ago",1,"The pituitary hormone that triggers ovulation and testosterone production."),D("hCG","hC","ago",2,"The pregnancy hormone. Also used to trigger ovulation in IVF.")],
+"LPAR1":[D("LPA","LP","ago",1,"A lipid messenger that drives scarring in damaged tissue."),D("Admilparant","Ad","ant",3,"In clinical trials to slow lung fibrosis.")],
+"CHRM2":[D("Acetylcholine","AC","ago",1,"Released by the vagus nerve to slow the heart."),D("Muscarine","Mu","ago",2,"A mushroom toxin. The receptor family is named after it."),D("Atropine","At","ant",3,"Speeds up a dangerously slow heart in emergencies.")],
+"CHRM3":[D("Acetylcholine","AC","ago",1,"Contracts airways, gut and bladder, and makes saliva."),D("Pilocarpine","Pi","ago",2,"Boosts saliva in dry mouth and narrows the pupil."),D("Tiotropium","Ti","ant",3,"An inhaler that opens the airways in COPD."),D("Oxybutynin","Ox","ant",3,"Calms an overactive bladder.")],
+"MC4R":[D("α-MSH","MS","ago",1,"Signals that you have eaten enough."),D("Setmelanotide","Se","ago",3,"Treats rare genetic forms of severe obesity."),D("AgRP","Ag","inv",2,"The body's own inverse agonist. It pushes MC4R below rest and drives hunger.")],
+"MTNR1A":[D("Melatonin","Me","ago",1,"Rises in the dark and tells the body clock it's night."),D("Ramelteon","Ra","ago",3,"A sleep medicine developed in Japan."),D("Agomelatine","Ag","ago",2,"An antidepressant that also activates melatonin receptors."),D("Luzindole","Lu","ant",3,"A research antagonist.")],
+"NPY1R":[D("Neuropeptide Y","NP","ago",1,"One of the strongest hunger signals in the brain."),D("BIBP 3226","BI","ant",3,"The first non-peptide Y1 blocker, a research tool.")],
+"NTSR1":[D("Neurotensin","Ne","ago",1,"Tunes dopamine signalling and gut movement."),D("Meclinertant","Me","ant",3,"A research antagonist (SR 48692).")],
+"OPRL1":[D("Nociceptin","No","ago",1,"Modulates pain and stress. Opioid-like, but morphine barely binds here."),D("Cebranopadol","Ce","ago",3,"An experimental painkiller that hits this receptor and μ-opioid together."),D("J-113397","J1","ant",3,"A research antagonist.")],
+"HCRTR2":[D("Orexin A","Or","ago",1,"Keeps you awake. Losing orexin causes narcolepsy."),D("Danavorexton","Da","ago",3,"An experimental agonist from Japan for narcolepsy."),D("Suvorexant","Su","ant",3,"A sleep medicine that blocks orexin."),D("Lemborexant","Le","ant",3,"A sleep medicine developed in Japan.")],
+"OR family":[D("Vanillin","Va","ago",1,"The smell of vanilla. It activates the receptor OR10G4."),D("Androstenone","An","ago",1,"Smells of urine to some people and of nothing to others, depending on their OR7D4 gene.")],
+"OXTR":[D("Oxytocin","Ox","ago",1,"Contracts the uterus in labour and releases milk."),D("Carbetocin","Ca","ago",2,"A long-acting oxytocin given after birth to prevent bleeding."),D("Atosiban","At","ant",3,"Relaxes the uterus to delay preterm birth.")],
+"F2R":[D("Thrombin","Th","ago",1,"Cuts the receptor's tail. The new end folds back and switches it on."),D("TRAP-6","TR","ago",2,"A research peptide that mimics the tethered ligand."),D("Vorapaxar","Vo","ant",3,"An antiplatelet drug that blocks PAR1.")],
+"P2RY12":[D("ADP","AD","ago",1,"Released by activated platelets to recruit more platelets."),D("Ticagrelor","Ti","ant",3,"A reversible blocker taken after heart attacks."),D("Clopidogrel","Cl","ant",5,"Its active form bonds to the receptor permanently, for the platelet's whole life.")],
+"PTH1R":[D("PTH","PT","ago",1,"Raises blood calcium and remodels bone."),D("Teriparatide","Te","ago",2,"Daily injections build bone in osteoporosis."),D("Abaloparatide","Ab","ago",2,"A PTHrP-based drug that also builds bone.")],
+"QRFPR":[D("QRFP","QR","ago",1,"Its RFamide peptide tunes appetite and bone growth. No drugs target it yet.")],
+"RHO":[D("Light","hν","ago",2,"One photon flips 11-cis retinal to all-trans, switching rhodopsin on."),D("11-cis retinal","Re","inv",1,"Holds rhodopsin firmly off in the dark, so your rods are not noisy.",[0])],
+"RXFP1":[D("Relaxin","Re","ago",1,"Relaxes vessels and tissues during pregnancy."),D("Serelaxin","Se","ago",2,"Recombinant relaxin tested in heart failure.")],
+"SMO":[D("Cholesterol","Ch","ago",1,"Smoothened's direct activator. Hedgehog itself binds Patched, which then stops keeping cholesterol away from Smoothened."),D("SAG","SA","ago",2,"A research agonist."),D("Cyclopamine","Cy","ant",2,"A toxin from corn lilies that caused one-eyed lambs, which led scientists to this pathway."),D("Vismodegib","Vi","ant",3,"Blocks Smoothened to treat basal cell skin cancer.")],
+"HTR2A":[D("Serotonin","Se","ago",1,"Shapes perception and mood."),D("Psilocin","Ps","par",2,"The active form of the magic mushroom compound psilocybin."),D("LSD","LS","par",3,"Sticks in the pocket for hours because a loop closes over it like a lid."),D("Pimavanserin","Pi","inv",3,"An inverse agonist that treats hallucinations in Parkinson's disease.")],
+"SSTR2":[D("Somatostatin","So","ago",1,"Switches off hormone release."),D("Octreotide","Oc","ago",3,"Controls hormone-secreting tumours and acromegaly."),D("Lanreotide","La","ago",3,"A monthly injection with the same job.")],
+"S1PR1":[D("S1P","S1","ago",1,"Guides immune cells out of lymph nodes."),D("Fingolimod","Fi","ago",3,"Switches S1P1 on so hard that cells pull it inside, trapping immune cells in lymph nodes. Used in multiple sclerosis."),D("Ozanimod","Oz","ago",3,"A newer, more selective drug that works the same way.")],
+"SCTR":[D("Secretin","Se","ago",1,"Tells the pancreas to release bicarbonate. The first hormone ever discovered.")],
+"TAS2R family":[D("Quinine","Qu","ago",1,"Gives tonic water its bitter taste."),D("Caffeine","Ca","ago",1,"Part of coffee's bitterness comes from caffeine switching on several bitter receptors."),D("Denatonium","De","ago",3,"The bitterest compound known. It's added to cleaning products to stop children swallowing them."),D("GIV3727","GI","ant",3,"A research blocker that cuts the bitter aftertaste of sweeteners like saccharin."),D("Probenecid","Pr","nam",9,"A gout drug that also dampens the bitter receptor TAS2R16 from a second site.",[4])],
+"TSHR":[D("TSH","TS","ago",1,"Tells the thyroid to make thyroid hormone."),D("Thyrotropin alfa","Th","ago",2,"Recombinant TSH used in thyroid cancer follow-up."),D("Stimulating antibody","Ab","ago",3,"The autoantibodies of Graves' disease, which switch the receptor on non-stop.")],
+"TACR1":[D("Substance P","SP","ago",1,"Carries nausea and pain signals."),D("Aprepitant","Ap","ant",3,"Prevents nausea during chemotherapy."),D("Rolapitant","Ro","ant",3,"A long-acting blocker for the same job.")],
+"TAAR1":[D("β-Phenylethylamine","PE","ago",1,"A trace amine, also found in small amounts in chocolate."),D("Amphetamine","Am","ago",2,"Also activates TAAR1, part of how it changes dopamine release."),D("Ulotaront","Ul","ago",3,"An experimental TAAR1 drug for schizophrenia."),D("EPPTB","EP","ant",3,"A research antagonist.")],
+"UTS2R":[D("Urotensin II","Ur","ago",1,"A very strong vessel-narrowing peptide."),D("Palosuran","Pa","ant",3,"An experimental blocker tested in diabetic kidney disease.")],
+"AVPR2":[D("Vasopressin","Va","ago",1,"Tells the kidney to hold on to water."),D("Desmopressin","De","ago",3,"Stops bedwetting and treats diabetes insipidus."),D("Tolvaptan","To","ant",3,"Raises low blood sodium and slows cyst growth in polycystic kidney disease.")],
+"VIPR1":[D("VIP","VI","ago",1,"Relaxes gut muscle and calms inflammation."),D("PACAP","PA","ago",1,"A related peptide that also activates the receptor.")],
+"FZD4":[D("Norrin","No","ago",1,"A protein, not a Wnt, that activates FZD4 to build blood vessels in the retina."),D("Wnt7a","Wn","ago",1,"A Wnt that builds blood vessels in the brain.")],
+"XCR1":[D("XCL1","XC","ago",1,"Lymphotactin, made by killer T cells. No drugs target this receptor yet.")],
+"NPY2R":[D("PYY 3-36","PY","ago",1,"A gut hormone released after meals that signals fullness."),D("BIIE0246","BI","ant",3,"A research antagonist.")],
+"GPR39":[D("Zinc","Zn","ago",1,"Zinc ions switch it on."),D("TC-G 1008","TC","ago",3,"A research agonist.")]
+};
+var RICH={
+ "ADRB2":{icon:"airway",where:"airway muscle during an asthma attack",meters:[{n:"Airway opening",u:"%",rest:35,max:100}],
+  drugs:[D("Salbutamol","Sa","ago",2,"The blue reliever inhaler. It switches β2 on, the airway muscle relaxes, and air flows within minutes.",[90]),
+   D("Adrenaline","Ad","ago",2,"Also opens the airways, one reason it is the emergency treatment for anaphylaxis.",[85]),
+   D("Propranolol","Pr","ant",3,"It blocks β2 as well as β1, so airways can tighten further. That's why this beta-blocker is avoided in asthma.",[20])]},
+ "OPRM1":{icon:"pain",where:"brain and spinal cord",meters:[{n:"Pain",u:"out of 10",rest:8,max:10},{n:"Breathing",u:"breaths/min",rest:16,max:20}],
+  drugs:[D("Morphine","Mo","ago",2,"A full agonist. Gi quietens pain signals, but the same receptor in the brainstem slows breathing.",[2,10]),
+   D("Fentanyl","Fe","ago",2,"Roughly 50 to 100 times stronger than morphine, so a tiny dose can stop breathing.",[1,5]),
+   D("Buprenorphine","Bu","par",4,"A partial agonist. It only switches the receptor on partway, so its effect on breathing levels off.",[4,13]),
+   D("Naloxone","Na","ant",3,"An antagonist that grips the pocket harder than morphine or fentanyl. It reverses an overdose within minutes.",[8,16])]},
+ "HRH1":{icon:"itch",where:"nose, skin and blood vessels",meters:[{n:"Itch and sneezing",u:"out of 10",rest:1,max:10}],
+  drugs:[D("Histamine","Hi","ago",1,"Released by mast cells in an allergy. H1 switches on, Gq releases Ca²⁺, vessels leak, skin itches and you sneeze.",[9]),
+   D("Cetirizine","Ce","inv",3,"An antihistamine. Strictly an inverse agonist, it holds H1 in its off shape so histamine can't switch it on.",[1]),
+   D("Diphenhydramine","Di","inv",3,"An older antihistamine that also blocks H1 inside the brain, which is why it makes you sleepy.",[1])]}
+};
+var REST={"RHO":2};
+function scenarioFor(it){
+  var r=RICH[it.g];
+  if(r) return {rec:it.n,k:it.k,c:it.c,where:r.where,icon:r.icon,meters:r.meters,drugs:r.drugs,b:it.b};
+  var rest=REST[it.g]!==undefined?REST[it.g]:10;
+  var V={ago:90,par:45,ant:rest,inv:0,pam:95,nam:4};
+  var drugs=(LIG[it.g]||[]).map(function(d){return {n:d.n,ab:d.ab,t:d.t,aff:d.aff,m:d.m,v:d.v||[d.ab&&V[d.t]]}});
+  drugs.forEach(function(d){if(d.v[0]===undefined)d.v=[V[d.t]]});
+  return {rec:it.n,k:it.k,c:it.c,where:it.w.toLowerCase(),icon:"gauge",
+    meters:[{n:"Receptor activity",u:"%",rest:rest,max:100}],drugs:drugs,b:it.b};
+}
+var LAB={i:0,sc:null,drug:null,mod:null,vals:[],seen:{},cls:"nolig"};
+var MCOL=["#E5484D","#3B82F6"];
+function isAllo(d){return d&&(d.t==="pam"||d.t==="nam")}
+function typeCls(d){
+  if(!d) return "nolig";
+  var t="t-"+d.t+" ";
+  if(d.t==="ago") return t+"p-bind p-swap p-split m-happy on";
+  if(d.t==="par") return t+"p-block p-part p-swap m-meh";
+  return t+"p-block m-sad";
+}
+/* activity for the generic gauge, combining main-pocket ligand and allosteric modulator */
+function activity(){
+  var sc=LAB.sc,rest=sc.meters[0].rest,o=LAB.drug,m=LAB.mod,a=o?o.v[0]:rest;
+  var agon=o&&(o.t==="ago"||o.t==="par");
+  if(m&&m.t==="pam") a=agon?Math.min(100,a+15):a+15;
+  if(m&&m.t==="nam") a=agon?Math.round(a*0.4):Math.max(0,a-6);
+  return a;
+}
+function stateCls(){
+  if(LAB.sc.icon!=="gauge") return typeCls(LAB.drug);
+  var o=LAB.drug,m=LAB.mod,a=LAB.vals[0],rest=LAB.sc.meters[0].rest,c=[];
+  if(o){c.push("t-"+o.t,"p-block")} else c.push("nolig");
+  if(m) c.push("has-mod");
+  if(a>=60) c.push("p-tm","p-swap","p-split","on");
+  else if(a>=25) c.push("p-part","p-swap");
+  var blocked=(o&&(o.t==="ant"||o.t==="inv"))||(m&&m.t==="nam");
+  c.push(a>=60?"m-happy":a>=25?"m-meh":blocked?"m-sad":"m-idle");
+  return c.join(" ");
+}
+function labSVG(sc){
+  var o=LAB.drug,m=LAB.mod;
+  var s='<svg viewBox="0 0 240 280" role="img" aria-label="'+esc(sc.rec)+(o?" with "+esc(o.n)+" in the pocket":" with an empty pocket")+(m?" and "+esc(m.n)+" at a second site":"")+'">';
+  s+=membrane(240);
+  s+='<g transform="translate(84,0)">'+receptor({c:sc.c,k:sc.k},o?o.ab:"",{face:true,badge:state.letters[state.sel]});
+  if(m) s+='<g class="modb t-'+m.t+'"><circle class="ligc" cx="102" cy="124" r="11"/><ellipse cx="98.5" cy="120.5" rx="3.2" ry="2" fill="#fff" opacity=".75"/></g>';
+  s+='</g>';
+  if(sc.k!=="o"){
+    var mc=GK[sc.k].c,dots=[[22,214],[40,256],[62,226],[226,214],[220,256],[30,236],[74,262],[50,204]];
+    dots.forEach(function(p){s+='<circle class="msg" cx="'+p[0]+'" cy="'+p[1]+'" r="4.5" fill="'+mc+'"/>'});
+  }
+  return s+'</svg>';
+}
+function drawStage(from){
+  var st=el("labstage"),to=stateCls();
+  st.innerHTML=labSVG(LAB.sc);
+  st.className="labstage "+(from===undefined?LAB.cls:from);
+  void st.offsetWidth;
+  requestAnimationFrame(function(){requestAnimationFrame(function(){st.className="labstage "+to})});
+  LAB.cls=to;
+}
+function iconSVG(sc,vals){
+  var v=vals[0],m=sc.meters[0];
+  if(sc.icon==="airway"){var k=Math.max(.15,v/100);
+    return '<svg viewBox="0 0 84 84" aria-hidden="true"><circle cx="42" cy="42" r="38" fill="#F2A7A0" stroke="#C9625A" stroke-width="2"/>'+
+      '<circle class="lumen" cx="42" cy="42" r="30" fill="var(--paper)" style="transform:scale('+k.toFixed(2)+')"/></svg>';}
+  if(sc.icon==="pain"){var a=v/m.max;
+    return '<svg viewBox="0 0 84 84" aria-hidden="true"><path d="M48 6 L20 46 L38 46 L32 78 L64 34 L46 34 Z" fill="#E89A2C" opacity="'+(0.15+0.85*a).toFixed(2)+'" stroke="#B36A0E" stroke-width="2" stroke-linejoin="round"/></svg>';}
+  if(sc.icon==="itch"){var n=Math.round(v),sp="";
+    for(var i=0;i<10;i++){sp+='<circle cx="'+(14+(i%5)*14)+'" cy="'+(30+Math.floor(i/5)*24)+'" r="5" fill="'+(i<n?"#D94C92":"var(--line)")+'"/>'}
+    return '<svg viewBox="0 0 84 84" aria-hidden="true">'+sp+'</svg>';}
+  var C=2*Math.PI*32,col=sc.k==="o"?GK.o.c:GK[sc.k].c;
+  return '<svg viewBox="0 0 84 84" aria-hidden="true"><circle cx="42" cy="42" r="32" fill="none" stroke="var(--line)" stroke-width="10"/>'+
+    '<circle class="gauge" cx="42" cy="42" r="32" fill="none" stroke="'+col+'" stroke-width="10" stroke-linecap="round" transform="rotate(-90 42 42)" '+
+    'stroke-dasharray="'+C.toFixed(1)+'" stroke-dashoffset="'+(C*(1-v/100)).toFixed(1)+'"/></svg>';
+}
+function drawReadout(prev){
+  var sc=LAB.sc,h='<div class="ricon">'+iconSVG(sc,prev||LAB.vals)+'</div><div class="meters">',
+      gcol=sc.icon==="gauge"?GK[sc.k].c:null;
+  sc.meters.forEach(function(m,i){
+    var v0=prev?prev[i]:LAB.vals[i];
+    h+='<div class="meter"><div class="top"><span>'+m.n+'</span><span><b data-mv="'+i+'">'+v0+'</b> '+m.u+'</span></div>'+
+       '<div class="track"><div class="fill" data-mf="'+i+'" style="background:'+(gcol||MCOL[i])+';width:'+(100*v0/m.max)+'%"></div></div></div>';
+  });
+  el("readout").innerHTML=h+'</div>';
+  requestAnimationFrame(function(){requestAnimationFrame(function(){
+    var ic=el("readout").querySelector(".ricon");
+    if(sc.icon==="airway"&&prev){
+      var lu=ic.querySelector(".lumen"); lu.style.transform="scale("+Math.max(.15,LAB.vals[0]/100)+")";
+    } else if(sc.icon==="gauge"&&prev){
+      var g=ic.querySelector(".gauge"),C=2*Math.PI*32; g.style.strokeDashoffset=(C*(1-LAB.vals[0]/100)).toFixed(1);
+    } else ic.innerHTML=iconSVG(sc,LAB.vals);
+    sc.meters.forEach(function(m,i){
+      el("readout").querySelector('[data-mf="'+i+'"]').style.width=(100*LAB.vals[i]/m.max)+"%";
+      if(prev) countUp(el("readout").querySelector('[data-mv="'+i+'"]'),prev[i],LAB.vals[i],900);
+    });
+  })});
+}
+function drawTray(){
+  var sc=LAB.sc;
+  el("tray").innerHTML=sc.drugs.map(function(d,i){
+    return '<button class="pill" type="button" data-d="'+i+'">'+esc(d.n)+
+      (LAB.seen[LAB.key+":"+i]?'<span class="tag '+d.t+'">'+TAG[d.t]+'</span>':'')+'</button>'}).join("");
+}
+function labTabs(){
+  el("scn").innerHTML=state.letters.map(function(L,j){
+    return '<button type="button" data-s="'+j+'" aria-pressed="'+(j===state.sel)+'" aria-label="Letter '+L+': '+esc(itemAt(j).n)+'">'+L+'</button>'}).join("");
+}
+function labLoad(){
+  var it=itemAt(state.sel); LAB.sc=scenarioFor(it); LAB.key=it.g; LAB.drug=null; LAB.mod=null; LAB.cls="nolig";
+  LAB.vals=LAB.sc.meters.map(function(m){return m.rest});
+  labTabs();
+  drawStage("nolig"); drawReadout(null); drawTray();
+  var few=LAB.sc.drugs.length===1?" Only one ligand is known for it, so this one is a short visit.":"";
+  el("labmsg").innerHTML='Letter '+state.letters[state.sel]+' is the <b>'+esc(it.n)+'</b> in the '+esc(LAB.sc.where)+
+    '. Its job: '+esc(it.b.charAt(0).toLowerCase()+it.b.slice(1))+'. The pocket is empty. Pick a ligand.'+few;
+}
+function labApply(i){
+  var sc=LAB.sc,d=sc.drugs[i],cur=LAB.drug,mod=LAB.mod,from=LAB.cls,lead,extra="";
+  LAB.seen[LAB.key+":"+i]=1; drawTray();
+  if((cur&&cur.n===d.n)||(mod&&mod.n===d.n)){el("labmsg").innerHTML='<b>'+esc(d.n)+'</b> is already bound.';return}
+  if(isAllo(d)){
+    LAB.mod=d;
+    lead=mod?'<b>'+esc(d.n)+' replaced '+esc(mod.n)+' at the second site.</b> ':'<b>'+esc(d.n)+' bound to a second site.</b> ';
+    var agon=cur&&(cur.t==="ago"||cur.t==="par");
+    if(d.t==="pam") extra=agon?' It boosts '+esc(cur.n)+"'s signal.":' With nothing in the main pocket it only nudges the receptor. Add the natural ligand to see the boost.';
+    else extra=agon?' It turns down '+esc(cur.n)+"'s signal.":' With nothing in the main pocket there is little signal to dampen yet.';
+    from=from.replace(/\bhas-mod\b/g,"");
+  } else {
+    if(cur&&d.aff<cur.aff){
+      var st=el("labstage"); st.classList.remove("shake"); void st.offsetWidth; st.classList.add("shake");
+      el("labmsg").innerHTML='<b>Blocked.</b> '+esc(cur.n)+' holds the pocket more tightly than '+esc(d.n)+', so '+esc(d.n)+
+        ' bounces off. '+esc(d.n)+' is: '+TYPES[d.t].toLowerCase()+'. Wash out the receptor to try it on an empty pocket.';
+      return;
+    }
+    LAB.drug=d;
+    lead=cur?'<b>'+esc(d.n)+' pushed '+esc(cur.n)+' out.</b> ':'<b>'+esc(d.n)+' bound.</b> ';
+    if(mod) extra=' '+esc(mod.n)+' is still sitting at the second site.';
+    from=from.replace(/\bp-block\b/g,"").replace(/\bt-\w+\b/g,"")+" nolig t-"+d.t;
+  }
+  var prev=LAB.vals.slice();
+  LAB.vals= sc.icon==="gauge" ? [activity()] : d.v.slice();
+  drawStage(from);
+  drawReadout(prev);
+  el("labmsg").innerHTML=lead+TYPES[d.t]+'. '+esc(d.m)+extra;
+}
+el("scn").addEventListener("click",function(e){var b=e.target.closest("[data-s]");if(b)select(+b.getAttribute("data-s"),false)});
+el("wash").addEventListener("click",function(){
+  var prev=LAB.vals.slice(),sc=LAB.sc; LAB.drug=null; LAB.mod=null; LAB.vals=sc.meters.map(function(m){return m.rest});
+  drawStage(); drawReadout(prev);
+  el("labmsg").innerHTML='Washed out. Both sites are empty and the '+esc(sc.rec)+' is back at rest.';
+});
+var DRAG=null,skipClick=false;
+el("tray").addEventListener("pointerdown",function(e){
+  var b=e.target.closest(".pill"); if(!b) return;
+  if(e.pointerType==="mouse") e.preventDefault();
+  DRAG={b:b,x:e.clientX,y:e.clientY,moved:false,g:null};
+});
+document.addEventListener("pointermove",function(e){
+  if(!DRAG) return;
+  if(!DRAG.moved&&Math.hypot(e.clientX-DRAG.x,e.clientY-DRAG.y)>6){
+    DRAG.moved=true; if(window.getSelection) window.getSelection().removeAllRanges();
+    var g=document.createElement("div"); g.className="ghost";
+    g.textContent=LAB.sc.drugs[+DRAG.b.getAttribute("data-d")].n; document.body.appendChild(g); DRAG.g=g;
+  }
+  if(DRAG.moved){
+    e.preventDefault();
+    DRAG.g.style.left=e.clientX+"px"; DRAG.g.style.top=e.clientY+"px";
+    var r=el("labstage").getBoundingClientRect();
+    el("labstage").classList.toggle("hover",e.clientX>r.left&&e.clientX<r.right&&e.clientY>r.top&&e.clientY<r.bottom);
+  }
+},{passive:false});
+function endDrag(){
+  if(!DRAG) return;
+  if(DRAG.moved){
+    skipClick=true; if(DRAG.g) DRAG.g.remove();
+    var st=el("labstage"),over=st.classList.contains("hover"); st.classList.remove("hover");
+    if(over) labApply(+DRAG.b.getAttribute("data-d"));
+    else el("labmsg").innerHTML="Drop the ligand onto the receptor to see what it does.";
+    setTimeout(function(){skipClick=false},50);
+  }
+  DRAG=null;
+}
+document.addEventListener("pointerup",endDrag);
+document.addEventListener("pointercancel",endDrag);
+el("tray").addEventListener("click",function(e){
+  var b=e.target.closest(".pill"); if(!b) return;
+  if(skipClick){skipClick=false;return}
+  labApply(+b.getAttribute("data-d"));
+});
+
+/* One selection drives the whole page */
+function select(i,replay){
+  state.sel=i;
+  el("row").querySelectorAll(".rc").forEach(function(r){r.setAttribute("aria-pressed",+r.getAttribute("data-i")===i)});
+  if(replay){
+    var cw=el("row").querySelector('.rc[data-i="'+i+'"] .cellwrap');
+    if(cw){cw.classList.remove("on"); void cw.offsetWidth; setTimeout(function(){cw.classList.add("on")},reduce?0:80);}
+  }
+  detail(); labLoad(); quizStart(); startHero(); drawStep();
+}
+
+/* Confetti */
+function confetti(box){
+  if(reduce||!box.animate) return;
+  var cols=["#E5484D","#3B82F6","#2E9E5B","#8E4EC6","#E89A2C","#F0B44C"];
+  for(var i=0;i<70;i++){
+    var c=document.createElement("span"),sz=5+Math.random()*7;
+    c.className="cf"; c.style.width=sz+"px"; c.style.height=(sz*(Math.random()<.5?1:1.8))+"px";
+    c.style.background=cols[i%cols.length]; c.style.borderRadius=Math.random()<.4?"50%":"2px";
+    box.appendChild(c);
+    var dx=(Math.random()-.5)*700,dy=-120-Math.random()*160,dy2=260+Math.random()*220,rot=(Math.random()-.5)*900;
+    c.animate([{transform:"translate(0,0) rotate(0)",opacity:1},
+               {transform:"translate("+dx*0.6+"px,"+dy+"px) rotate("+rot/2+"deg)",opacity:1,offset:.35},
+               {transform:"translate("+dx+"px,"+dy2+"px) rotate("+rot+"deg)",opacity:0}],
+              {duration:1600+Math.random()*900,easing:"cubic-bezier(.2,.7,.4,1)"}).onfinish=(function(n){return function(){n.remove()}})(c);
+  }
+}
+
+/* How it works stepper */
+var STEPS=[
+  {t:"A messenger arrives",x:"Hormones, neurotransmitters, light and smells mostly cannot cross the cell membrane. Instead they bind a receptor sitting in the membrane.",
+   a:"Think of the receptor as a doorbell. The visitor stays outside; the bell rings inside.",cls:""},
+  {t:"The receptor changes shape",x:"Binding twists the seven helices. Helix 6 swings outward and opens a pocket on the inside of the cell.",
+   a:"Like a key turning a lock: nothing passes through the door, but the mechanism inside moves.",cls:"p-bind"},
+  {t:"The G protein switches on",x:"The G protein docks into that pocket. Its Gα part lets go of GDP and grabs GTP, which is its on switch.",
+   a:"GDP means off, GTP means on. The receptor is the hand that flips the switch.",cls:"p-bind p-swap"},
+  {t:"The signal spreads",x:"Gα and Gβγ split apart and switch on enzymes that make second messengers such as cAMP or Ca²⁺. One receptor can switch on many G proteins, so a tiny signal grows into a big response.",
+   a:"One doorbell, a whole house of people running to answer it.",cls:"p-bind p-swap p-split"},
+  {t:"Switching off",x:"Gα slowly breaks GTP back down to GDP and rejoins Gβγ. Kinases tag the receptor with phosphates and arrestin binds to stop it, so the cell is ready for the next message.",
+   a:"Every good signal needs an off switch, or the bell would ring forever.",cls:""}
+];
+var step=0;
+function drawStep(){
+  var art=el("howart"),prev=art.getAttribute("data-cls")||"";
+  art.className="howart "+prev;
+  var it=selItem(),L=selLetter(),nl=natLig(it),shown=it.k==="o"?{c:it.c,k:"i",g:it.g}:it;
+  art.innerHTML=heroSVG(shown,L,nl.ab);
+  el("stnow").innerHTML='Showing letter <b>'+esc(L)+'</b>: '+esc(theName(it.n))+', '+ligNow(it)+
+    (it.k==="o"?' Frizzleds mostly signal through Dishevelled, so here you see their less common G protein route (Gi).':'');
+  void art.offsetWidth;
+  requestAnimationFrame(function(){art.className="howart "+STEPS[step].cls});
+  art.setAttribute("data-cls",STEPS[step].cls);
+  el("steps").innerHTML=STEPS.map(function(s,i){
+    return '<li><button type="button" data-st="'+i+'" aria-label="Step '+(i+1)+': '+s.t+'"'+(i===step?' aria-current="step"':'')+'>'+(i+1)+'</button></li>'}).join("");
+  el("sttl").textContent=STEPS[step].t;
+  el("stxt").textContent=STEPS[step].x;
+  el("sana").textContent=STEPS[step].a;
+  el("stback").disabled=step===0;
+  el("stnext").textContent= step===STEPS.length-1 ? "Start again" : "Next step";
+}
+el("steps").addEventListener("click",function(e){var b=e.target.closest("[data-st]");if(b){step=+b.getAttribute("data-st");drawStep()}});
+el("stnext").addEventListener("click",function(){step=(step+1)%STEPS.length;drawStep()});
+el("stback").addEventListener("click",function(){if(step>0){step--;drawStep()}});
+
+/* Events */
+el("form").addEventListener("submit",function(e){e.preventDefault();bind(el("nm").value)});
+el("nm").addEventListener("input",function(){el("err").textContent=""});
+document.querySelectorAll("[data-try]").forEach(function(b){
+  b.addEventListener("click",function(){el("nm").value=b.getAttribute("data-try");bind(el("nm").value);
+    el("res").scrollIntoView({behavior:reduce?"auto":"smooth",block:"start"})});
+});
+el("row").addEventListener("click",function(e){
+  var b=e.target.closest(".rc"); if(!b) return;
+  select(+b.getAttribute("data-i"),true);
+});
+el("swap").addEventListener("click",function(){
+  state.pick=state.letters.map(function(L,i){return pickFor(L,state.pick[i])});
+  render(true);
+});
+el("share").addEventListener("click",function(){
+  var url=location.origin+location.pathname+"?name="+encodeURIComponent(state.name);
+  function ok(){el("toast").textContent="Link copied. Anyone who opens it sees "+state.name+"'s receptors.";
+    setTimeout(function(){el("toast").textContent=""},3200)}
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(url).then(ok,function(){fallback(url);ok()})}
+  else{fallback(url);ok()}
+});
+function fallback(t){var a=document.createElement("textarea");a.value=t;document.body.appendChild(a);a.select();
+  try{document.execCommand("copy")}catch(e){} document.body.removeChild(a)}
+
+/* Start */
+startHero();
+var param=new URLSearchParams(location.search).get("name");
+var start=(param&&param.trim())?param:"Shweta";
+el("nm").value=start; bind(start);
+</script>
+</body>
+</html>
