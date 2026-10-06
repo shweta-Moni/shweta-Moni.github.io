@@ -1,0 +1,57 @@
+---
+layout: archive
+title: "Science &amp; Society"
+permalink: /science-and-society/
+author_profile: true
+---
+
+{% include base_path %}
+
+<p>Things I make to explain what I do, and to argue that research is more improvised and more
+human than papers make it look.</p>
+
+<h2 class="archive__subtitle">ReceptorMe</h2>
+
+<p>Type a name and every letter becomes a real G protein-coupled receptor, catches its natural
+messenger, and tells you what it does in your body. Built to show people that the receptors
+I simulate are not abstractions &mdash; they are the reason light, adrenaline and caffeine do
+anything at all.</p>
+
+<p><a href="{{ base_path }}/receptorme/" class="btn btn--primary">Open ReceptorMe &rarr;</a></p>
+
+<h2 class="archive__subtitle">When science meets memes</h2>
+
+<p>Made during my Ph.D., mostly at times when the simulations were not cooperating.</p>
+
+{% if site.data.memes %}
+<div class="memegrid">
+  {% for meme in site.data.memes %}
+    <figure>
+      <img src="{{ base_path }}/images/memes/{{ meme.file }}" alt="{{ meme.alt | default: meme.caption }}" loading="lazy">
+      {% if meme.caption %}<figcaption>{{ meme.caption }}</figcaption>{% endif %}
+    </figure>
+  {% endfor %}
+</div>
+<style>
+.memegrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px;margin:1.5em 0}
+.memegrid figure{margin:0}
+.memegrid img{width:100%;height:auto;border:1px solid #e5e5e5;border-radius:6px;display:block}
+.memegrid figcaption{font-size:.8em;color:#7a8288;margin-top:.4em;line-height:1.4}
+</style>
+{% else %}
+<p><em>Gallery coming soon.</em></p>
+{% endif %}
+
+<h2 class="archive__subtitle">Away from the lab</h2>
+
+<p>Short pieces on accidental discoveries, and on the parts of research that happen when
+nobody is looking for them.</p>
+
+{% assign stories = site.categories.stories %}
+{% if stories %}
+  {% for post in stories %}
+    {% include archive-single.html %}
+  {% endfor %}
+{% else %}
+  <p><em>Nothing published here yet.</em></p>
+{% endif %}

@@ -1,0 +1,21 @@
+---
+layout: archive
+title: "Notes"
+permalink: /notes/
+author_profile: true
+---
+
+{% include base_path %}
+
+<p>Short, practical notes on running molecular simulations &mdash; the things that go wrong,
+the checks worth doing before you trust a number, and the habits that save a month of
+recomputing. Written mostly for my past self.</p>
+
+{% assign notes = site.categories.notes %}
+{% if notes %}
+  {% for post in notes %}
+    {% include archive-single.html %}
+  {% endfor %}
+{% else %}
+  <p><em>Nothing published here yet.</em></p>
+{% endif %}
