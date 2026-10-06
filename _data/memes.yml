@@ -2,7 +2,24 @@
 #
 # Put the image file in images/memes/ then add an entry here.
 # `alt` is for screen readers and is worth writing properly.
-#
-# - file: equilibration.png
-#   caption: "When the system finally equilibrates at 3 a.m."
-#   alt: "Cartoon of a tired researcher watching an energy plot flatten out"
+# `paper` and `paper_label` are optional.
+
+- file: patch_regulation_on_SMO_meme_by_shweta.jpg
+  caption: "PTCH1's day job is keeping cholesterol away from SMO. Remove PTCH1 and SMO finally gets the lipid it has been reaching for."
+  alt: "Running Away Balloon meme. A figure labelled Cholesterol reaches for a yellow balloon labelled SMO; in the second panel a pink figure labelled PTCH1 holds Cholesterol back."
+
+- file: SMO_in_primary_cilia_meme_by_shweta.jpeg
+  caption: "SMO in the primary cilium does not have to choose: cholesterol at the CRAC and CARC motifs, PI4P at the basic clusters of the intracellular domain. It presses both. A summary of my 2022 paper."
+  alt: "Two Buttons meme. A sweating man hesitates over two buttons reading 'Cholesterol binds to CRAC7/CARC4/strict CCM' and 'PI4P binds to Arg/Lys clusters in ICD'. He is labelled SMO in primary cilia."
+  paper: "https://doi.org/10.1016/j.bbamem.2022.183946"
+  paper_label: "BBA Biomembranes 2022"
+
+- file: Chol_binding_effect_on_SMO_meme_by_shweta.jpeg
+  caption: "Where cholesterol binds decides how loudly SMO signals: nothing without it, a little through the transmembrane site, more through the CRD, and most when both are occupied and the helices rearrange. A summary of my 2023 paper."
+  alt: "Expanding brain meme with four levels, rising from no cholesterol and no activity to cholesterol in both the TMD and CRD giving high activity."
+  paper: "https://doi.org/10.1021/acs.jpcb.3c02255"
+  paper_label: "J. Phys. Chem. B 2023"
+
+- file: Hh_pathway_meme_by_shweta.jpeg
+  caption: "Hedgehog signalling is a cascade of blocks, not pushes. The ligand never touches SMO &mdash; it removes PTCH1 from the cilium and lets the chain collapse, which is what finally frees GLI."
+  alt: "Church standoff meme labelled SuFu/PKA, SMO and PTCH1, with the HH ligand hiding in the pews. Below, a diagram shows GLI, SuFu/PKA, SMO, PTCH1 and HH linked by inhibition symbols."
