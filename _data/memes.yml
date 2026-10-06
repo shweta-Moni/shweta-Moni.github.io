@@ -1,0 +1,8 @@
+# Science memes shown on /science-and-society/
+#
+# Put the image file in images/memes/ then add an entry here.
+# `alt` is for screen readers and is worth writing properly.
+#
+# - file: equilibration.png
+#   caption: "When the system finally equilibrates at 3 a.m."
+#   alt: "Cartoon of a tired researcher watching an energy plot flatten out"
