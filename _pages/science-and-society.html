@@ -19,6 +19,42 @@ anything at all.</p>
 
 <p><a href="{{ base_path }}/receptorme/" class="btn btn--primary">Open ReceptorMe &rarr;</a></p>
 
+<h2 class="archive__subtitle">How a receptor switches on and off</h2>
+
+<p>EGFR sits in the cell membrane and decides whether a cell should grow. One illustrated
+overview and three short animations of the basic switch &mdash; no results, just the pathway
+as it is taught.</p>
+
+<figure class="egfrwide">
+  <img src="{{ base_path }}/images/memes/egfr_signaling_cartoon.png" alt="Illustrated overview of EGFR signalling: EGF binding, receptor dimerisation and autophosphorylation, Shc recruitment through its PTB domain, and the RAS-RAF-MEK-ERK cascade leading to proliferation, survival, migration and differentiation" loading="lazy">
+  <figcaption>The whole pathway on one page: EGF binds, the receptors pair up and phosphorylate each other, Shc is recruited through its PTB domain, and the signal runs down RAS to ERK. Drawn in the style of the comics I grew up with.</figcaption>
+</figure>
+
+<div class="egfrgrid">
+  <figure>
+    <video src="{{ base_path }}/images/memes/egfr_cycle.mp4" controls preload="metadata" playsinline></video>
+    <figcaption>The EGFR cycle.</figcaption>
+  </figure>
+  <figure>
+    <video src="{{ base_path }}/images/memes/egfr_dimer_phosphorylation.mp4" controls preload="metadata" playsinline></video>
+    <figcaption>Dimerisation and phosphorylation.</figcaption>
+  </figure>
+  <figure>
+    <video src="{{ base_path }}/images/memes/egfr_phosphatase.mp4" controls preload="metadata" playsinline></video>
+    <figcaption>A phosphatase removes the phosphate groups and the signal stops.</figcaption>
+  </figure>
+</div>
+
+<style>
+.egfrwide{margin:1.5em 0}
+.egfrwide img{width:100%;height:auto;border:1px solid #e5e5e5;border-radius:6px;display:block}
+.egfrwide figcaption{font-size:.8em;color:#7a8288;margin-top:.4em;line-height:1.4}
+.egfrgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;margin:1.5em 0}
+.egfrgrid figure{margin:0}
+.egfrgrid video{width:100%;height:auto;border:1px solid #e5e5e5;border-radius:6px;display:block;background:#000}
+.egfrgrid figcaption{font-size:.8em;color:#7a8288;margin-top:.4em;line-height:1.4}
+</style>
+
 <h2 class="archive__subtitle">When science meets memes</h2>
 
 <p>Made during my Ph.D., mostly at times when the simulations were not cooperating.</p>
