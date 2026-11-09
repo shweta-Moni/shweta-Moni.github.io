@@ -11,9 +11,9 @@ redirect_from:
 
 Education
 ======
-* B.Sc. in Biotechnology, Marwari College, Bhagalpur, Tilka Manjhi Bhagalpur University, 2013
+* Ph.D. in Bioinformatics, International Institute of Information Technology (IIIT) - Hyderabad, 2023 (degree conferred July 2024)
 * M.Sc. in Bioinformatics, Central University of South Bihar, 2016
-* Ph.D in Bioinformatics, International Institute of Information Technology (IIIT) - Hyderabad, 2023
+* B.Sc. in Biotechnology, Marwari College, Bhagalpur, Tilka Manjhi Bhagalpur University, 2013
 
 Work experience
 ======
@@ -40,19 +40,31 @@ Work experience
 
 Skills
 ======
-* Programming Skills
-  * Python, Unix/Linux, Shell scripting, R (statistical software), LaTeX, Basic of C, C++, Perl, PHP, HTML.
-  * Related Courses
-    * Qualified Computer Teacher Training Course (CTTC) and (DCA) from SITD (Society for Information Technology Development) (secured 84.8%).
-    * Qualified Linux test conducted by IIT Bombay, funded by MHRD, Gov. of India.
-* Bioinformatics Skills
-  * Visualization tools: Chimera, VMD, Pymol, Discovery Studio, Desmond, Paraview.
-  * Molecular Dynamics tool (Atomistic and Coarse Grained Simulation): Gromacs, Desmond (Schrödinger), AMBER (basic).
-  * Protein structure prediction: Homology moldeling (Modeller, SWISS MODEL), Fold recognition (I‐TASSER, MUSTER, Phyre and Phyre2), Ab‐initio (ROBETTA).
-  * Chemical Structure Drawing tools: ChemDraw, Chem Ultra, MarvinSketch.
-  * Other tools and servers: Inkscape, Xmgrace, CHARMM‐GUI Input Generator, MDAnalysis, MDTraj, FATSLiM, stanalyzer, LAMMPS (basic).
+* Programming
+  * Python (NumPy, pandas, SciPy, scikit-learn), Unix/Linux, shell scripting, R, LaTeX; working knowledge of C, C++, Perl, PHP, HTML.
+  * Related courses: Computer Teacher Training Course (CTTC) and DCA, SITD (84.8%); Linux test conducted by IIT Bombay, funded by MHRD, Govt. of India.
+* Molecular dynamics (atomistic and coarse-grained)
+  * GROMACS, GENESIS (spdyn), AMBER, OpenMM, Desmond (Schrodinger), PLUMED; Martini 3 and CALVADOS coarse-grained force fields; LAMMPS (basic).
+* Enhanced sampling
+  * 1D and 2D umbrella sampling with WHAM, metadynamics, Gaussian accelerated MD (GaMD), accelerated weight histogram (AWH), adaptive sampling.
+* Binding free energy
+  * MM-GBSA and MM-PBSA endpoint calculations.
+* System preparation
+  * CHARMM-GUI (membrane builder and input generator), packmol-memgen, PDBFixer, pdb4amber.
+* Protein structure prediction and modelling
+  * AlphaFold2 and AlphaFold3 (monomers and complexes), AlphaFold Protein Structure Database, Robetta/RoseTTAFold; comparative modelling with Modeller and SWISS-MODEL; threading with I-TASSER and Phyre2; HPacker for side-chain repacking of mutant models.
+* Molecular docking
+  * AutoDock Vina, HADDOCK (information-driven protein-protein and protein-ligand docking).
+* Analysis and visualisation
+  * MDAnalysis, MDTraj, FATSLiM, stanalyzer, VMD, PyMOL, UCSF Chimera, Discovery Studio, Paraview, Xmgrace, Inkscape.
+* Chemical structure handling
+  * ChemDraw, MarvinSketch, Open Babel, RDKit.
+* High-performance computing
+  * SLURM (dependency chains, GPU array jobs), Grid Engine, Singularity/Apptainer containers; RIKEN Rikyu (NVIDIA GB200, arm64) and NSM exascale platforms.
+* AI-driven scientific workflows
+  * MDClaw (agent skills and CLI for autonomous MD studies), DAG-based study orchestration with provenance tracking, LLM coding agents for simulation setup, analysis and reporting.
 * Languages
-  * English and Hindi (can read, write and speak)
+  * English and Hindi (read, write and speak)
 
 Publications
 ======
