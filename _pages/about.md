@@ -10,7 +10,9 @@ redirect_from:
 
 I am a computational biologist/chemist specializing in biomolecular simulations, with a focus on understanding how molecular-level changes — from cancer mutations to drug binding — shape the behavior of proteins and cellular systems. 
 
-Currently, I am a postdoctoral researcher affiliated with RIKEN, Kobe, and Osaka University, working in the group of Prof. Ai Shinobu. My present research investigates the effect of cancer-related mutations in the Epidermal Growth Factor Receptor (EGFR) using molecular dynamics simulations and computational modeling.
+Currently, I am a postdoctoral researcher affiliated with RIKEN, Kobe, and The University of Osaka, working in the group of Prof. Ai Shinobu. My present research investigates the effect of cancer-related mutations in the Epidermal Growth Factor Receptor (EGFR) using molecular dynamics simulations and computational modeling.
+
+I am also working at the interface of simulation and machine learning. Through the RIKEN AI for Science Bootcamp & Hackathon and the JAPAN SCIENTIST AI JAM SESSION 2026, I have worked on agent-orchestrated molecular dynamics workflows on GPU supercomputers, where my contribution has been the membrane-receptor side: proposing how agent-generated simulations should be benchmarked against curated public trajectory data, and improving the analysis pipeline.
 
 Previously, I worked with [Prof. Wonpil Im](https://compbio.lehigh.edu/){:target="_blank"} at Lehigh University (PA, USA), where I studied the state-transition mechanism of the organic cation transporter OCT1 using enhanced-sampling MD simulations. Before that, I was a postdoctoral fellow at  [IIT Delhi](https://home.iitd.ac.in/){:target="_blank"} with [Prof. Divya Nayar](https://sites.google.com/prod/view/divyanayar/){:target="_blank"}, exploring the aggregation behavior of dye molecules and small peptides through MD simulations.
 
@@ -29,4 +31,9 @@ Research Interest
 5. Material science
 6. Major facilitator superfamily (MFS) (OCT1, OCT2, URAT1)
 7. Epidermal Growth Factor Receptor (EGFR)
+8. Machine learning and AI-assisted molecular simulation
+
+Away from the bench
+======
+I love art, and making science visual is my hobby — memes, cartoons and short animations that explain receptors and signalling. Some of it is on my [Science & Society](/science-and-society/) page.
 
