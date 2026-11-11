@@ -72,9 +72,9 @@ Publications
 * **S. Kumari**, A. Mitra, and G. Bulusu, “Putative Role of cholesterol in shaping the structural and functional dynamics of Smoothened (SMO)”, The Journal of Physical Chemistry B, 127(44), 9476-9495 (2023).
 * **S. Kumari**, A. Mitra, and G. Bulusu, “Structural dynamics of Smoothened (SMO) in the ciliary membrane and its interaction with membrane lipids.”, Biochimica et Biophysica Acta (BBA)-Biomembranes, 1864(8), 183946 (2022).
 
-*Manuscripts in preparation*
+*Submitted*
 
-* Y. Matsunaga\*, **S. Kumari**, Y. Wu, Y. Zhang, A. Enomoto, Y. Homma, S. Hatakeyama, A. Shinobu. "An auditable harness for biomolecular dynamics simulations by AI agents". Manuscript in preparation.
+* Y. Matsunaga\*, Y. Wu, Y. Zhang, **S. Kumari**, A. Enomoto, Y. Homma, S. Hatakeyama, A. Shinobu. "An auditable harness for biomolecular dynamics simulations by AI agents". Submitted, 2026.
 
 Conferences and Workshops Attended
 ======
