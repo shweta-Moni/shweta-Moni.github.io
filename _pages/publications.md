@@ -16,8 +16,8 @@ of Smoothened (SMO)”, [The Journal of Physical Chemistry B](https://doi.org/10
 1. **S. Kumari**, A. Mitra, and G. Bulusu, “Structural dynamics of Smoothened (SMO) in the ciliary membrane and its interaction with membrane lipids.”, [Biochimica et Biophysica Acta (BBA)-Biomembranes](https://doi.org/10.1016/j.bbamem.2022.183946){:target="_blank"}, 1864(8), 183946 (2022).
 {: reversed="reversed"}
 
-Manuscripts in preparation
+Submitted
 ========
-* Y. Matsunaga\*, **S. Kumari**, Y. Wu, Y. Zhang, A. Enomoto, Y. Homma, S. Hatakeyama, A. Shinobu, "An auditable harness for biomolecular dynamics simulations by AI agents". Manuscript in preparation.
+* Y. Matsunaga\*, Y. Wu, Y. Zhang, **S. Kumari**, A. Enomoto, Y. Homma, S. Hatakeyama, A. Shinobu, "An auditable harness for biomolecular dynamics simulations by AI agents". Submitted, 2026.
 
 
