@@ -125,6 +125,10 @@ Awards & Fellowships
 * 1st rank, M.Sc. Bioinformatics in Central University of South Bihar (2014‐2016).
 
 
+Professional Memberships
+======
+* Life Member, Indian Biophysical Society (since 2023).
+
 Scientific Meetings Organised
 ======
  * Volunteer, 2026 Frontier Symposium in Computational and Experimental Biophysics and Bioscience, RIKEN, Kobe, Japan (6–8 November 2026).
