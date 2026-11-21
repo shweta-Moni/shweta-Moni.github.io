@@ -21,7 +21,7 @@ Work experience
 * April 2026- Present: Post‑doctoral Researcher
    * Laboratory for Computational Molecular Design, RIKEN, Kobe / The University of Osaka (group of Prof. Ai Shinobu)
    * Biomolecule simulation. Effect of cancer related mutation in EGFR using MD simulation and modeling.
-   * AI-driven simulation workflows: participant in the RIKEN AI for Science Bootcamp & Hackathon, applying agent-orchestrated molecular dynamics on the Rikyu GPU supercomputer; proposed the benchmarking strategy adopted for validating agent-generated simulations, and contributed testing, bug reports and analysis-pipeline suggestions to MDClaw.
+   * AI-driven simulation workflows: participant in the RIKEN AI for Science Bootcamp & Hackathon, applying agent-orchestrated molecular dynamics to membrane-protein systems on the Rikyu GPU supercomputer, running classical MD and adaptive sampling and classifying conformational states from the trajectories; proposed the benchmarking strategy adopted for validating agent-generated simulations, and contributed testing, bug reports and analysis-pipeline suggestions to MDClaw.
    
 * July 2024- June 2025: Post‑doctoral Fellow
    * Lehigh University,Bethlehem, Pennsylvania, United States
@@ -79,7 +79,6 @@ Publications
 Conferences and Workshops Attended
 ======
 * Poster presentation at the conference
-  * **S. Kumari**, M. Taiji, A. Shinobu, and M. Okada. “Mutation-dependent changes in EGFR–Shc recognition through integrative modelling, molecular dynamics simulations and docking”. International Conference on Biophysics and Biomedical Sciences (ICBBS 2026), BEXCO, Busan, Korea (23–28 November 2026, forthcoming).
   * **S. Kumari**, M. Taiji, A. Shinobu, and M. Okada. “Beyond the interface: how C-tail phosphorylation modulates EGFR variant dimer dynamics”. 2026 Frontier Symposium in Computational and Experimental Biophysics and Bioscience, Kobe, Japan (6–8 November 2026).
   * **S. Kumari**, M. Taiji, A. Shinobu, and M. Okada. “Mutation-dependent changes in EGFR–Shc recognition through integrative modeling, molecular dynamics simulations, and docking”. From Molecules to Cells: Multiscale Simulation and AI-Driven Modeling for Biomolecular Systems (MSAM), organized by RIKEN-Kobe (May 28–30, 2026).
   * **S. Kumari**, A. Mitra, and G. Bulusu. “A Journey into the Structure and Dynamics of Smoothened
