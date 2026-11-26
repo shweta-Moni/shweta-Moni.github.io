@@ -80,6 +80,7 @@ Conferences and Workshops Attended
 ======
 * Poster presentation at the conference
   * **S. Kumari**, M. Taiji, A. Shinobu, and M. Okada. “Beyond the interface: how C-tail phosphorylation modulates EGFR variant dimer dynamics”. 2026 Frontier Symposium in Computational and Experimental Biophysics and Bioscience, Kobe, Japan (6–8 November 2026).
+  * **S. Kumari**, M. Taiji, A. Shinobu, and M. Okada. “Mutation-dependent changes in EGFR–Shc recognition through integrative modelling, molecular dynamics simulations and docking”. International Conference on Biophysics and Biomedical Sciences (ICBBS 2026), BEXCO, Busan, Korea (23–28 November 2026).
   * **S. Kumari**, M. Taiji, A. Shinobu, and M. Okada. “Mutation-dependent changes in EGFR–Shc recognition through integrative modeling, molecular dynamics simulations, and docking”. From Molecules to Cells: Multiscale Simulation and AI-Driven Modeling for Biomolecular Systems (MSAM), organized by RIKEN-Kobe (May 28–30, 2026).
   * **S. Kumari**, A. Mitra, and G. Bulusu. “A Journey into the Structure and Dynamics of Smoothened
 (SMO) in Hedgehog (HH) Signaling Pathway”. JNCASR‑CECAM Conference MD@60, organized by Jawaharlal Nehru
